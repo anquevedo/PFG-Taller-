@@ -21,6 +21,10 @@ public class User implements Serializable {
     @Column(name= "mail", nullable = false, length = 50, unique = true)
     private String email;
 
+
+
+
+
     private boolean enabled;
 
     public Long getId() {
@@ -55,7 +59,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
