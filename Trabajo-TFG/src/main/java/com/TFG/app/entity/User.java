@@ -10,7 +10,7 @@ public class User implements Serializable {
     //Generado con el plugin generateserialversionuid
     private static final long serialVersionUID = 4616887219577529750L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
     private Long id;
 
     @Column(length = 50)

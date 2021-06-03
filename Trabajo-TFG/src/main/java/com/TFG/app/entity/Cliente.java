@@ -10,9 +10,8 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = -3942582380715938825L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (updatable = false, nullable = false)
-    private long dni;
+    @Column (name= "Dni", updatable = false, nullable = false, unique = true, length = 9)
+    private Long dni;
 
     @Column(length = 50, nullable = false)
     private String name;
@@ -31,7 +30,7 @@ public class Cliente implements Serializable {
 
     private boolean enabled;
 
-    public static long getSerialVersionUID() { return serialVersionUID; }
+
 
     public long getDni() { return dni; }
 
@@ -67,19 +66,19 @@ public class Cliente implements Serializable {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public int getTelephone() {
         return telephone;
     }
 
     public void setTelephone(int telephone) {
         this.telephone = telephone;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

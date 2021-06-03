@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -24,7 +25,6 @@ public class UserController {
     public ResponseEntity<?> create (@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
-
     //Leer usuario
     @GetMapping("/{id}")
     public ResponseEntity<?> read(@PathVariable(value= "id") Long UserId){

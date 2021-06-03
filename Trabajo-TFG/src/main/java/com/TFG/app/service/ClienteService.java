@@ -11,9 +11,9 @@ public interface ClienteService {
 
     public Page<Cliente> findAll(Pageable pageable);
 
-    public Optional<Cliente> findById(Long id);
+    public Optional<Cliente> findByDni(Long dni);
 
     public Cliente save(Cliente cliente);
 
-    public void deleteById(Long id);
+    public void deleteByDni(Long dni);
 }
