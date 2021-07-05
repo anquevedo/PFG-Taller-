@@ -51,7 +51,9 @@ import java.util.stream.StreamSupport;
             cliente.get().setName(clienteDetails.getName());
             cliente.get().setSurname(clienteDetails.getSurname());
             cliente.get().setEmail(clienteDetails.getEmail());
+            cliente.get().setPassword(clienteDetails.getPassword());
             cliente.get().setEnabled(clienteDetails.getEnabled());
+
 
             return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente.get()));
 

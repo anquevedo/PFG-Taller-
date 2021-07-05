@@ -49,7 +49,6 @@ public class UserController {
         user.get().setName(userDetails.getName());
         user.get().setSurname(userDetails.getSurname());
         user.get().setEmail(userDetails.getEmail());
-        user.get().setEnabled(userDetails.getEnabled());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user.get()));
 

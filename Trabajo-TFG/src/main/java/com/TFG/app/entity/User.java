@@ -21,6 +21,9 @@ public class User implements Serializable {
     @Column(name= "mail", nullable = false, length = 50, unique = true)
     private String email;
 
+    @Column(name= "password", nullable = false, length = 50, unique = true)
+    private String password;
+
 
 
 
@@ -47,6 +50,8 @@ public class User implements Serializable {
         return surname;
     }
 
+    public String getPassword() { return password; }
+
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -59,12 +64,8 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public boolean getEnabled() {
-        return enabled;
-    }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+
+    public void setPassword(String password) {this.password = password; }
 }
 

@@ -10,8 +10,7 @@ public class Administrador implements Serializable{
     private static final long serialVersionUID = -5543972741600709171L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (updatable = false, nullable = false)
+    @Column (updatable = false, nullable = false, unique = true)
     private Long dni;
 
     @Column(length = 50, nullable = false)
@@ -22,6 +21,8 @@ public class Administrador implements Serializable{
 
     @Column (nullable = false)
     private String password;
+
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
