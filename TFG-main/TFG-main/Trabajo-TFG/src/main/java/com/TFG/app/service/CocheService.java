@@ -24,8 +24,8 @@ public class CocheService {
         return cocheRepository.findById(id);
     }
 
-    public Optional<Coche> getByNombre(String nombre){
-        return cocheRepository.findByNombre(nombre);
+    public Optional<Coche> getByMatricula(String matricula){
+        return cocheRepository.findByMatricula(matricula);
     }
 
     public void  save(Coche producto){
@@ -40,7 +40,7 @@ public class CocheService {
         return cocheRepository.existsById(id);
     }
 
-    public boolean existsByNombre(String nombre){
-        return cocheRepository.existsByNombre(nombre);
+    public boolean existsByMatricula(String matricula){
+        return cocheRepository.existsByMatricula(matricula);
     }
 }

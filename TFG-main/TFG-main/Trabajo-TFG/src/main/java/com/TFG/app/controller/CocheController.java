@@ -34,23 +34,23 @@ public class CocheController {
         return new ResponseEntity(coche, HttpStatus.OK);
     }
 
-    @GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Coche> getByNombre(@PathVariable("nombre") String nombre){
-        if(!cocheService.existsByNombre(nombre))
+    @GetMapping("/detailname/{matricula}")
+    public ResponseEntity<Coche> getByNombre(@PathVariable("matricula") String matricula){
+        if(!cocheService.existsByMatricula(matricula))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Coche producto = cocheService.getByNombre(nombre).get();
+        Coche producto = cocheService.getByMatricula(matricula).get();
         return new ResponseEntity(producto, HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody CocheDto cocheDto){
-        if(StringUtils.isBlank(cocheDto.getNombre()))
-            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(cocheDto.getMatricula()))
+            return new ResponseEntity(new Mensaje("la matricula es obligatoria"), HttpStatus.BAD_REQUEST);
         if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<0 )
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        if(cocheService.existsByNombre(cocheDto.getNombre()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        Coche coche = new Coche(cocheDto.getNombre(), cocheDto.getPrecio());
+        if(cocheService.existsByMatricula(cocheDto.getMatricula()))
+            return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
+        Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAño(),cocheDto.getPrecio());
         cocheService.save(coche);
         return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
     }
@@ -59,15 +59,15 @@ public class CocheController {
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody CocheDto cocheDto){
         if(!cocheService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(cocheService.existsByNombre(cocheDto.getNombre()) && cocheService.getByNombre(cocheDto.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(cocheDto.getNombre()))
-            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(cocheService.existsByMatricula(cocheDto.getMatricula()) && cocheService.getByMatricula(cocheDto.getMatricula()).get().getId() != id)
+            return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(cocheDto.getMatricula()))
+            return new ResponseEntity(new Mensaje("la matricula es obligatoria"), HttpStatus.BAD_REQUEST);
         if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<0 )
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
         Coche coche = cocheService.getOne(id).get();
-        coche.setNombre(cocheDto.getNombre());
+        coche.setMatricula(cocheDto.getMatricula());
         coche.setPrecio(cocheDto.getPrecio());
         cocheService.save(coche);
         return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
@@ -78,7 +78,7 @@ public class CocheController {
         if(!cocheService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         cocheService.delete(id);
-        return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("coche eliminado"), HttpStatus.OK);
     }
 
 

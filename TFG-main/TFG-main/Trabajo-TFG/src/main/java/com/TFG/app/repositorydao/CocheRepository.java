@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CocheRepository extends JpaRepository<Coche, Integer> {
-    Optional<Coche> findByNombre(String nombre);
-    boolean existsByNombre(String nombre);
+    Optional<Coche> findByMatricula(String matricula);
+    boolean existsByMatricula(String matricula);
 }

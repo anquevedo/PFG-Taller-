@@ -1,81 +1,82 @@
 package com.TFG.app.controller;
 
+import com.TFG.app.dto.IncidenciaDto;
+import com.TFG.app.dto.Mensaje;
 import com.TFG.app.entity.Incidencia;
 import com.TFG.app.service.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.apache.commons.lang3.StringUtils;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/incidencia")
+@RequestMapping("/api/Incidencia")
 public class IncidenciaController {
 
-        @Autowired
-        private IncidenciaService incidenciaService;
+    @Autowired
+    private IncidenciaService incidenciaService;
 
-        //Crear nueva incidencia
-        @PostMapping
-        public ResponseEntity<?> create (@RequestBody Incidencia incidencia) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(incidenciaService.save(incidencia));
-        }
-        //Leer incidencia
-        @GetMapping("/{id}")
-        public ResponseEntity<?> read(@PathVariable(value= "id") Long IncidenciaId){
-            Optional<Incidencia> oIncidencia = incidenciaService.findById(IncidenciaId);
+    @GetMapping("/lista")
+    public ResponseEntity<List<Incidencia>> list(){
+        List<Incidencia> list = incidenciaService.list();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Incidencia> getById(@PathVariable("id") int id){
+        if(!incidenciaService.existsById(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        Incidencia incidencia = incidenciaService.getOne(id).get();
+        return new ResponseEntity(incidencia, HttpStatus.OK);
+    }
 
-            if(!oIncidencia.isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(oIncidencia);
-        }
+    @GetMapping("/numeroIncidencia/{numeroIncidencia}")
+    public ResponseEntity<Incidencia> getByNumeroIncidencia(@PathVariable("numeroIncidencia") String numeroIncidencia){
+        if(!incidenciaService.existsByNumeroIncidencia(numeroIncidencia))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        Incidencia tip = incidenciaService.getByNumeroIncidencia(numeroIncidencia).get();
+        return new ResponseEntity(tip, HttpStatus.OK);
+    }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody IncidenciaDto incidenciaDto){
+        if(StringUtils.isBlank(incidenciaDto.getNumeroIncidencia()))
+            return new ResponseEntity(new Mensaje("el numero de incidencia es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(incidenciaDto.getTipo()))
+            return new ResponseEntity(new Mensaje("el tipo de incidencia es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(incidenciaDto.getTiempoEst()==null || incidenciaDto.getTiempoEst()<0 )
+            return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
+        Incidencia incidencia = new Incidencia(incidenciaDto.getNumeroIncidencia(), incidenciaDto.getTipo(), incidenciaDto.getTiempoEst(), incidenciaDto.getDescripcion(), false);
+        incidenciaService.save(incidencia);
+        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+    }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody IncidenciaDto incidenciaDto){
+        if(!incidenciaService.existsById(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        if(incidenciaService.existsByNumeroIncidencia(incidenciaDto.getNumeroIncidencia()) && incidenciaService.getByNumeroIncidencia(incidenciaDto.getNumeroIncidencia()).get().getId() != id)
+            return new ResponseEntity(new Mensaje("esa incidencia ya existe"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(incidenciaDto.getNumeroIncidencia()))
+            return new ResponseEntity(new Mensaje("el tiempo"), HttpStatus.BAD_REQUEST);
+        if(incidenciaDto.getTiempoEst()==null || incidenciaDto.getTiempoEst()<0 )
+            return new ResponseEntity(new Mensaje("el tiempo ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
+        Incidencia incidencia = incidenciaService.getOne(id).get();
+        incidencia.setNumeroIncidencia(incidenciaDto.getNumeroIncidencia());
+        incidencia.setTiempoEst(incidenciaDto.getTiempoEst());
+        incidencia.setSolucionada(incidenciaDto.isSolucionada());
+        incidenciaService.save(incidencia);
+        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+    }
 
-        //Actualizar incidencia
-        @PutMapping("/{id}")
-        public ResponseEntity<?> update (@RequestBody Incidencia incidenciaDetails, @PathVariable (value="id")Long incidenciaId){
-            Optional<Incidencia> incidencia= incidenciaService.findById(incidenciaId);
-
-            if(!incidencia.isPresent()){
-                return ResponseEntity.notFound().build();
-            }
-
-            //Copiar todo entero si queremos actualizar todo: BeanUtils.copyProperties(userDetails, user.get());
-            incidencia.get().setDesc(incidenciaDetails.getDesc());
-            incidencia.get().setSolucionada(incidenciaDetails.getSolucionada());
-            incidencia.get().setTiempoEst(incidenciaDetails.getTiempoEst());
-            incidencia.get().setTipo(incidenciaDetails.getTipo());
-
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(incidenciaService.save(incidencia.get()));
-
-        }
-
-        //Borrar usuario
-        @DeleteMapping("/{id}")
-        public ResponseEntity<?> delete (@PathVariable(value = "id")Long incidenciaId){
-            if(!incidenciaService.findById(incidenciaId).isPresent()){
-                return ResponseEntity.notFound().build();
-            }
-
-            incidenciaService.deleteById(incidenciaId);
-            return ResponseEntity.ok().build();
-        }
-
-        //Leer todos los usuarios
-        @GetMapping
-        public List<Incidencia> readAll(){
-            List<Incidencia> incidencias= StreamSupport
-                    .stream(incidenciaService.findAll().spliterator(),false)
-                    .collect(Collectors.toList());
-            return incidencias;
-        }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")int id){
+        if(!incidenciaService.existsById(id))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        incidenciaService.delete(id);
+        return new ResponseEntity(new Mensaje("incidencia eliminada"), HttpStatus.OK);
+    }
 }

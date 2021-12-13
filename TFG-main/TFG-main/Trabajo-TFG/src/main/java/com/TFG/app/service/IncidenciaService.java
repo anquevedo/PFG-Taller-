@@ -1,21 +1,46 @@
 package com.TFG.app.service;
 
 import com.TFG.app.entity.Incidencia;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.TFG.app.repositorydao.IncidenciaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface IncidenciaService {
-    public Iterable<Incidencia> findAll();
+@Service
+@Transactional
+public class IncidenciaService {
 
-    public Page<Incidencia> findAll(Pageable pageable);
+        @Autowired
+        IncidenciaRepository incidenciaRepository;
 
-    public Optional<Incidencia> findById(Long id);
+        public List<Incidencia> list(){
+                return incidenciaRepository.findAll();
+        }
 
-    public Incidencia save(Incidencia incidencia);
+        public Optional<Incidencia> getOne(int id){
+                return incidenciaRepository.findById(id);
+        }
 
-    public void deleteById(Long id);
+        public Optional<Incidencia> getByNumeroIncidencia(String numeroIncidencia){
+                return incidenciaRepository.findByNumeroIncidencia(numeroIncidencia);
+        }
 
+        public void  save(Incidencia incidencia){
+                incidenciaRepository.save(incidencia);
+        }
 
+        public void delete(int id){
+                incidenciaRepository.deleteById(id);
+        }
+
+        public boolean existsById(int id){
+                return incidenciaRepository.existsById(id);
+        }
+
+        public boolean existsByNumeroIncidencia(String numeroIncidencia){
+                return incidenciaRepository.existsByNumeroIncidencia(numeroIncidencia);
+        }
 }

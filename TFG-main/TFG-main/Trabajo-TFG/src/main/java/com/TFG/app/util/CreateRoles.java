@@ -1,5 +1,5 @@
 package com.TFG.app.util;
-/*
+
 import com.TFG.app.Security.entity.Rol;
 import com.TFG.app.Security.enums.RolNombre;
 import com.TFG.app.Security.service.RolService;
@@ -17,7 +17,9 @@ public class CreateRoles implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
         Rol rolUser = new Rol(RolNombre.ROLE_USUARIO);
+        Rol rolMecanico = new Rol(RolNombre.ROLE_MECANICO);
         rolService.save(rolAdmin);
         rolService.save(rolUser);
+        rolService.save(rolMecanico);
     }
-}*/
+}

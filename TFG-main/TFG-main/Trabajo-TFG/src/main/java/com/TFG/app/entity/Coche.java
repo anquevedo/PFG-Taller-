@@ -1,29 +1,30 @@
 package com.TFG.app.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class Coche {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nombre;
+    private String matricula;
+    private String marca;
+    private String modelo;
+    private int año;
     private float precio;
 
     public Coche() {
     }
 
-    public Coche(String nombre, float precio) {
-        this.nombre = nombre;
+    public Coche(String matricula, String marca, String modelo, int año, float precio) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.año = año;
         this.precio = precio;
     }
 
@@ -35,12 +36,36 @@ public class Coche {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
     }
 
     public float getPrecio() {

@@ -1,41 +1,34 @@
-package com.TFG.app.entity;
+package com.TFG.app.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+public class IncidenciaDto {
 
-@Entity
-public class Incidencia {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String numeroIncidencia;
-    private String tipo;
-    private float tiempoEst;
-    private String descripcion;
-    private boolean solucionada;
+        @NotBlank
+        private String numeroIncidencia;
+        @NotBlank
+        private String tipo;
+        @Min(0)
+        private float tiempoEst;
+        @NotBlank
+        private String descripcion;
+        @NotNull
+        @Column(nullable = false)
+        private boolean solucionada;
 
 
-    public Incidencia (){
+        public IncidenciaDto() {
+        }
 
-    }
-
-    public Incidencia(String numeroIncidencia, String tipo, float tiempoEst, String descripcion, boolean solucionada) {
+    public IncidenciaDto(@NotBlank String numeroIncidencia, @NotBlank String tipo, @Min(0) float tiempoEst, @NotBlank String descripcion, @NotNull boolean solucionada) {
         this.numeroIncidencia = numeroIncidencia;
         this.tipo = tipo;
         this.tiempoEst = tiempoEst;
         this.descripcion = descripcion;
         this.solucionada = solucionada;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNumeroIncidencia() {
@@ -54,11 +47,11 @@ public class Incidencia {
         this.tipo = tipo;
     }
 
-    public float getTiempoEst() {
+    public Float getTiempoEst() {
         return tiempoEst;
     }
 
-    public void setTiempoEst(float tiempoEst) {
+    public void setTiempoEst(Float tiempoEst) {
         this.tiempoEst = tiempoEst;
     }
 
@@ -78,3 +71,4 @@ public class Incidencia {
         this.solucionada = solucionada;
     }
 }
+
