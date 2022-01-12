@@ -1,16 +1,15 @@
 package com.TFG.app.Security.entity;
 
 import com.TFG.app.Security.enums.RolNombre;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Rol {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private RolNombre rolNombre;
@@ -18,7 +17,7 @@ public class Rol {
     public Rol() {
     }
 
-    public Rol(RolNombre rolNombre) {
+    public Rol(@NotNull RolNombre rolNombre) {
         this.rolNombre = rolNombre;
     }
 

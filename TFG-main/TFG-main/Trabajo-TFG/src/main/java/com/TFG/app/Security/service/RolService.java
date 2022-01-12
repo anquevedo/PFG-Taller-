@@ -1,5 +1,6 @@
 package com.TFG.app.Security.service;
 
+
 import com.TFG.app.Security.entity.Rol;
 import com.TFG.app.Security.enums.RolNombre;
 import com.TFG.app.Security.repository.RolRepository;
@@ -16,11 +17,11 @@ public class RolService {
     @Autowired
     RolRepository rolRepository;
 
-    public Optional<Rol> getRolByRolNombre(RolNombre rolNombre){
-        return  rolRepository.findByRolNombre(rolNombre);
+    public Optional<Rol> getByRolNombre(RolNombre rolNombre) {
+        return rolRepository.findByRolNombre(rolNombre);
     }
 
-    public void save(Rol rol){
+    public void save(Rol rol) {
         rolRepository.save(rol);
     }
 }

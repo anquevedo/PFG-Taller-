@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    private final static Logger logger= LoggerFactory.getLogger(JwtProvider.class);
+    private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
     @Value("${jwt.secret}")
     private String secret;
@@ -21,10 +21,11 @@ public class JwtProvider {
     private int expiration;
 
     public String generateToken(Authentication authentication){
-    UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+        UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
-                .setExpiration(new Date(new Date().getTime() + expiration*1000))
-                .signWith(SignatureAlgorithm.HS512,secret)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + expiration * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
@@ -32,21 +33,20 @@ public class JwtProvider {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
-
-        } catch (MalformedJwtException e) {
+        }catch (MalformedJwtException e){
             logger.error("token mal formado");
-        } catch (UnsupportedJwtException e) {
+        }catch (UnsupportedJwtException e){
             logger.error("token no soportado");
-        } catch (ExpiredJwtException e) {
+        }catch (ExpiredJwtException e){
             logger.error("token expirado");
-        }catch (IllegalArgumentException e) {
-            logger.error("token vacio");
-        }catch (SignatureException e) {
-            logger.error("fallo en la firma");
+        }catch (IllegalArgumentException e){
+            logger.error("token vacío");
+        }catch (SignatureException e){
+            logger.error("fail en la firma");
         }
         return false;
     }

@@ -1,57 +1,45 @@
 package com.TFG.app.Security.entity;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements Serializable {
-
-    //Generado con el plugin generateserialversionuid
-    private static final long serialVersionUID = 4616887219577529750L;
-
+public class Usuario {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotNull
     private String nombre;
-
     @NotNull
     @Column(unique = true)
     private String nombreUsuario;
-
     @NotNull
     private String email;
-
     @NotNull
     private String password;
-
-
-    @ManyToMany
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = " usuario_id"),
-    inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @NotNull
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String nombreUsuario, String email, String password) {
+    public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

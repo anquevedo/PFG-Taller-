@@ -1,23 +1,21 @@
 package com.TFG.app.Security.dto;
 
 
-import com.sun.istack.NotNull;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 public class NuevoUsuario {
-
-    @NotNull
+    @NotBlank
     private String nombre;
-    @NotNull
+    @NotBlank
     private String nombreUsuario;
-    @NotNull
+    @Email
     private String email;
-    @NotNull
+    @NotBlank
     private String password;
-
-    private Set<String>roles = new HashSet<>();
+    private Set<String> roles = new HashSet<>();
 
     public String getNombre() {
         return nombre;

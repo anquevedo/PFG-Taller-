@@ -1,5 +1,5 @@
 package com.TFG.app.util;
-
+/*
 import com.TFG.app.Security.entity.Rol;
 import com.TFG.app.Security.enums.RolNombre;
 import com.TFG.app.Security.service.RolService;
@@ -22,4 +22,4 @@ public class CreateRoles implements CommandLineRunner {
         rolService.save(rolUser);
         rolService.save(rolMecanico);
     }
-}
+}*/

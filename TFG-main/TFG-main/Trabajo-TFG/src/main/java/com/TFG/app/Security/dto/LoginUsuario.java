@@ -1,11 +1,11 @@
 package com.TFG.app.Security.dto;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class LoginUsuario {
-    @NotNull
+    @NotBlank
     private String nombreUsuario;
-    @NotNull
+    @NotBlank
     private String password;
 
     public String getNombreUsuario() {
