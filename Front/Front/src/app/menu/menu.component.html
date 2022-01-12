@@ -12,12 +12,17 @@
           <a class="nav-link" routerLink="/lista"><i class="far fa-list-alt"></i> Lista</a>
         </li>
         <li class="nav-item" *ngIf="!isLogged">
-            <a class="nav-link"  routerLink="/login"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+            <a class="nav-link"  routerLink="/login"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión Como Usuario</a>
           </li>
           <li class="nav-item" *ngIf="isLogged" (click)="onLogOut()">
             <a class="nav-link" style="cursor: pointer;"><i class="fas fa-door-open" ></i> Cerrar Sesión</a>
           </li>
-        
+          <li class="nav-item" *ngIf="!isLogged">
+            <a class="nav-link"  routerLink="/login"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión como Mecanico</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged" (click)="onLogOut()">
+            <a class="nav-link" style="cursor: pointer;"><i class="fas fa-door-open" ></i> Cerrar Sesión</a>
+          </li>
         
       </ul>
     </div>

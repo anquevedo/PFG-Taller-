@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
         @NotBlank
         private String modelo;
         @NotBlank
-        private int año;
+        private int anio;
         @Min(0)
         private float precio;
 
@@ -20,11 +20,11 @@ import javax.validation.constraints.NotBlank;
         public CocheDto() {
         }
 
-        public CocheDto(@NotBlank String matricula, @NotBlank String marca, @NotBlank String modelo, @NotBlank int año, @Min(0) float precio) {
+        public CocheDto(@NotBlank String matricula, @NotBlank String marca, @NotBlank String modelo, @NotBlank int anio, @Min(0) float precio) {
             this.matricula = matricula;
             this.marca = marca;
             this.modelo = modelo;
-            this.año = año;
+            this.anio = anio;
             this.precio = precio;
         }
 
@@ -52,12 +52,10 @@ import javax.validation.constraints.NotBlank;
             this.modelo = modelo;
         }
 
-        public int getAño() {
-            return año;
-        }
+        public int getAnio() { return anio; }
 
-        public void setAño(int año) {
-            this.año = año;
+        public void setAnio(int anio) {
+            this.anio = anio;
         }
 
         public Float getPrecio() {

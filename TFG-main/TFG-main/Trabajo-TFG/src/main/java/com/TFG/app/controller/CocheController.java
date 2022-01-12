@@ -47,11 +47,11 @@ public class CocheController {
     public ResponseEntity<?> create(@RequestBody CocheDto cocheDto){
         if(StringUtils.isBlank(cocheDto.getMatricula()))
             return new ResponseEntity(new Mensaje("la matricula es obligatoria"), HttpStatus.BAD_REQUEST);
-        if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<0 )
+        if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<1 )
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(cocheService.existsByMatricula(cocheDto.getMatricula()))
             return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
-        Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAño(),cocheDto.getPrecio());
+        Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAnio(),cocheDto.getPrecio());
         cocheService.save(coche);
         return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
     }
@@ -64,12 +64,14 @@ public class CocheController {
             return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(cocheDto.getMatricula()))
             return new ResponseEntity(new Mensaje("la matricula es obligatoria"), HttpStatus.BAD_REQUEST);
-        if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<0 )
+        if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<1 )
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
         Coche coche = cocheService.getOne(id).get();
-        coche.setMatricula(cocheDto.getMatricula());
+        coche.setMarca(cocheDto.getMarca());
+        coche.setModelo(cocheDto.getModelo());
         coche.setPrecio(cocheDto.getPrecio());
+        coche.setAnio(cocheDto.getAnio());
         cocheService.save(coche);
         return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
     }

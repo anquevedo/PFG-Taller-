@@ -14,17 +14,17 @@ public class Coche {
     private String matricula;
     private String marca;
     private String modelo;
-    private int año;
+    private int anio;
     private float precio;
 
     public Coche() {
     }
 
-    public Coche(String matricula, String marca, String modelo, int año, float precio) {
+    public Coche(String matricula, String marca, String modelo, int anio, float precio) {
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
-        this.año = año;
+        this.anio = anio;
         this.precio = precio;
     }
 
@@ -60,12 +60,12 @@ public class Coche {
         this.modelo = modelo;
     }
 
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int año) {
+        this.anio = anio;
     }
 
     public float getPrecio() {
