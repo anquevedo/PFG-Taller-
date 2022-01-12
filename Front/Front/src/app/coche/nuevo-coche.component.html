@@ -4,9 +4,24 @@
         <div class="col-md-4 mx-auto">
             <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
                 <div class="form-group">
+                    <label for="matricula">Matricula</label>
+                    <input type="text" class="form-control" id="matricula" name="matricula"
+                    [(ngModel)]="matricula" required>
+                </div>
+                <div class="form-group">
                     <label for="marca">Marca</label>
                     <input type="text" class="form-control" id="marca" name="marca"
                     [(ngModel)]="marca" required>
+                </div>
+                <div class="form-group">
+                    <label for="marca">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo"
+                    [(ngModel)]="modelo" required>
+                </div>       
+                <div class="form-group">
+                    <label for="anio">Año</label>
+                    <input type="number" class="form-control" id="anio" name="anio"
+                    [(ngModel)]="anio" required>
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio</label>

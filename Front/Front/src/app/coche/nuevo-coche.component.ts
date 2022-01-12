@@ -16,7 +16,7 @@ export class NuevoCocheComponent implements OnInit {
   matricula!: string;
   marca!: string;
   modelo!: string;
-  año!: number;
+  anio!: number;
 
   constructor(
     private cocheService: CocheService,
@@ -28,7 +28,7 @@ export class NuevoCocheComponent implements OnInit {
   }
 
   onCreate(): void {
-    const coche = new Coche(this.matricula, this.marca, this.modelo, this.año, this.precio);
+    const coche = new Coche(this.matricula, this.marca, this.modelo, this.anio, this.precio);
     this.cocheService.save(coche).subscribe(
       data => {
         this.toastr.success('Coche Creado', 'OK', {
