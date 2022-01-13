@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Coche } from '../models/coche';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CocheService {
 
-  cocheURL= 'http://localhost:8080/Coche/'
-
+  cocheURL= environment.cocheURL;
+  
   constructor(private httpClient: HttpClient) { }
 
   public lista(): Observable<Coche[]> {

@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class NuevoCocheComponent implements OnInit {
 
-  nombre = '';
   precio!: number;
   matricula!: string;
   marca!: string;
@@ -40,7 +39,6 @@ export class NuevoCocheComponent implements OnInit {
         this.toastr.error(err.error.mensaje, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
         });
-        // this.router.navigate(['/']);
       }
     );
   }

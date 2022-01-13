@@ -12,7 +12,6 @@ import { TokenService } from '../service/token.service';
 export class ListaCocheComponent implements OnInit {
 
   coches: Coche[] = [];
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -23,12 +22,7 @@ export class ListaCocheComponent implements OnInit {
 
   ngOnInit() {
     this.cargarCoches();
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach(rol => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   cargarCoches(): void {

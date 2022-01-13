@@ -19,6 +19,7 @@ public class Usuario {
     private String email;
     @NotNull
     private String password;
+    private String tokenPassword;
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
@@ -33,6 +34,7 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
+
     }
 
     public int getId() {
@@ -75,6 +77,15 @@ public class Usuario {
         this.password = password;
     }
 
+
+    public String getTokenPassword() {
+        return tokenPassword;
+    }
+
+    public void setTokenPassword(String tokenPassword) {
+        this.tokenPassword = tokenPassword;
+    }
+
     public Set<Rol> getRoles() {
         return roles;
     }
@@ -82,5 +93,6 @@ public class Usuario {
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
+
 }
 
