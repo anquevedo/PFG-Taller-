@@ -20,7 +20,6 @@ public class CocheController {
         @Autowired
         private CocheService cocheService;
 
-
     @GetMapping("/lista")
     public ResponseEntity<List<Coche>> list(){
         List<Coche> list = cocheService.list();
