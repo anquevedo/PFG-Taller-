@@ -3,10 +3,13 @@ package com.TFG.app.Security.service;
 
 import com.TFG.app.Security.entity.Usuario;
 import com.TFG.app.Security.repository.UsuarioRepository;
+import com.TFG.app.entity.Coche;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,4 +42,20 @@ public class UsuarioService {
     public void save(Usuario usuario){
         usuarioRepository.save(usuario);
     }
+
+    public List<Usuario> find() {return usuarioRepository.find(); }
+
+    public int buscarNombreUsuario(String nombreUsuario){
+        return usuarioRepository.buscarNombreUsuario(nombreUsuario);
+    }
+
+    public void deleteRol(int id){
+        usuarioRepository.deleteByRol(id);
+    }
+    public void deleteUsuario(int id){
+        usuarioRepository.deleteByUsuario(id);
+
+    }
+
+
 }

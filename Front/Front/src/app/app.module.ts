@@ -21,6 +21,8 @@ import { MenuComponent } from './menu/menu.component';
 import { IndexComponent } from './index/index.component';
 import { SendEmailComponent } from './changepassword/send-email.component';
 import { ChangePasswordComponent } from './changepassword/change-password.component';
+import { ListaMecanicoComponent } from './Mecanico/lista-mecanico/lista-mecanico.component';
+import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico.component';
 
 
 
@@ -36,7 +38,9 @@ import { ChangePasswordComponent } from './changepassword/change-password.compon
     MenuComponent,
     IndexComponent,
     SendEmailComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ListaMecanicoComponent,
+    NuevoMecanicoComponent
   ],
   imports: [
     BrowserModule,

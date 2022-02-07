@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface IncidenciaRepository  extends JpaRepository<Incidencia, Integer> {
-    Optional<Incidencia> findByNumeroIncidencia(String numeroIncidencia);
-    boolean existsByNumeroIncidencia(String numeroIncidencia);
+
 }

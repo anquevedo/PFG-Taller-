@@ -1,0 +1,26 @@
+<app-menu></app-menu>
+<div class="container">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">nombre</th>
+        <th scope="col">nombreUsuario</th>
+        <th scope="col">email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let nuevoUsuario of nuevoUsuario">
+        <td>{{nuevoUsuario.nombre}}</td>
+        <td>{{nuevoUsuario.nombreUsuario}}</td>
+        <td>{{nuevoUsuario.email}}</td>
+        <td *ngIf="isAdmin"><button class="btn btn-outline-danger" (click)="borrar(nuevoUsuario.nombreUsuario)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-3" *ngIf="isAdmin">
+    <button class="btn btn-outline-success btn-lg" routerLink="/nuevoMecanico">
+      <i class="fas fa-plus-circle" routerLink="/nuevoMecanico"></i> Nuevo Mecanico</button>
+  </div>
+
+</div>

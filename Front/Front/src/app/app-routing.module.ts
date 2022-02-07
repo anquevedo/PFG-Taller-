@@ -11,6 +11,9 @@ import { CocheGuardService } from './guards/coche-guard.service';
 import { ChangePasswordComponent } from './changepassword/change-password.component';
 import { SendEmailComponent } from './changepassword/send-email.component';
 import { LoginGuard } from './guards/login.guards';
+import { ListaMecanicoComponent } from './Mecanico/lista-mecanico/lista-mecanico.component';
+import { MecanicoGuardService } from './guards/mecanico-guard.service';
+import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico.component';
 
 
 const routes: Routes = [
@@ -23,6 +26,9 @@ const routes: Routes = [
   { path: 'detalle/:id', component: DetalleCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user'] } },
   { path: 'nuevo', component: NuevoCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin'] } },
   { path: 'editar/:id', component: EditarCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin'] } },
+  { path: 'nuevoMecanico', component: NuevoMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },
+  { path: 'listaMecanico', component: ListaMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },
+
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

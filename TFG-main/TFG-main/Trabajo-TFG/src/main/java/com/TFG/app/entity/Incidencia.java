@@ -1,33 +1,44 @@
 package com.TFG.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.Date;
 
 @Entity
 public class Incidencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String numeroIncidencia;
     private String tipo;
-    private float tiempoEst;
     private String descripcion;
-    private boolean solucionada;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd" , timezone = "GMT+8")
+    private Date dateInicio;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd" , timezone = "GMT+8")
+    private Date dateFin;
+
+    private String estado;
 
 
     public Incidencia (){
 
     }
 
-    public Incidencia(String numeroIncidencia, String tipo, float tiempoEst, String descripcion, boolean solucionada) {
-        this.numeroIncidencia = numeroIncidencia;
+    public Incidencia(String tipo, String descripcion, Date dateInicio, Date dateFin, String estado) {
         this.tipo = tipo;
-        this.tiempoEst = tiempoEst;
         this.descripcion = descripcion;
-        this.solucionada = solucionada;
+        this.dateInicio = dateInicio;
+        this.dateFin = dateFin;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -38,28 +49,12 @@ public class Incidencia {
         this.id = id;
     }
 
-    public String getNumeroIncidencia() {
-        return numeroIncidencia;
-    }
-
-    public void setNumeroIncidencia(String numeroIncidencia) {
-        this.numeroIncidencia = numeroIncidencia;
-    }
-
     public String getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public float getTiempoEst() {
-        return tiempoEst;
-    }
-
-    public void setTiempoEst(float tiempoEst) {
-        this.tiempoEst = tiempoEst;
     }
 
     public String getDescripcion() {
@@ -70,11 +65,27 @@ public class Incidencia {
         this.descripcion = descripcion;
     }
 
-    public boolean isSolucionada() {
-        return solucionada;
+    public Date getDateInicio() {
+        return dateInicio;
     }
 
-    public void setSolucionada(boolean solucionada) {
-        this.solucionada = solucionada;
+    public void setDateInicio(Date dateInicio) {
+        this.dateInicio = dateInicio;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

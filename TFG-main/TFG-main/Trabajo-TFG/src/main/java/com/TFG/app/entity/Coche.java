@@ -1,10 +1,8 @@
 package com.TFG.app.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.TFG.app.Security.entity.Usuario;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 @Entity
 public class Coche {
@@ -16,6 +14,10 @@ public class Coche {
     private String modelo;
     private int anio;
     private float precio;
+/*
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Usuario.class)
+    @JoinColumn(name= "userid", referencedColumnName = "user_id")
+    private Usuario usuario;*/
 
     public Coche() {
     }
@@ -75,4 +77,12 @@ public class Coche {
     public void setPrecio(float precio) {
         this.precio = precio;
     }
+/*
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }*/
 }

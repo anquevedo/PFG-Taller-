@@ -4,39 +4,33 @@ import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 public class IncidenciaDto {
 
-        @NotBlank
-        private String numeroIncidencia;
-        @NotBlank
-        private String tipo;
-        @Min(0)
-        private float tiempoEst;
-        @NotBlank
-        private String descripcion;
-        @NotNull
-        @Column(nullable = false)
-        private boolean solucionada;
+    @NotBlank
+    private String tipo;
 
+    @NotBlank
+    private String descripcion;
 
-        public IncidenciaDto() {
+    @NotBlank
+    private Date dateInicio;
+
+    private Date dateFin;
+
+    @NotNull
+    private String estado;
+
+    public IncidenciaDto() {
         }
 
-    public IncidenciaDto(@NotBlank String numeroIncidencia, @NotBlank String tipo, @Min(0) float tiempoEst, @NotBlank String descripcion, @NotNull boolean solucionada) {
-        this.numeroIncidencia = numeroIncidencia;
+    public IncidenciaDto(@NotBlank String tipo, @NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado) {
         this.tipo = tipo;
-        this.tiempoEst = tiempoEst;
         this.descripcion = descripcion;
-        this.solucionada = solucionada;
-    }
-
-    public String getNumeroIncidencia() {
-        return numeroIncidencia;
-    }
-
-    public void setNumeroIncidencia(String numeroIncidencia) {
-        this.numeroIncidencia = numeroIncidencia;
+        this.dateInicio = dateInicio;
+        this.dateFin = dateFin;
+        this.estado = estado;
     }
 
     public String getTipo() {
@@ -47,14 +41,6 @@ public class IncidenciaDto {
         this.tipo = tipo;
     }
 
-    public Float getTiempoEst() {
-        return tiempoEst;
-    }
-
-    public void setTiempoEst(Float tiempoEst) {
-        this.tiempoEst = tiempoEst;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -63,12 +49,28 @@ public class IncidenciaDto {
         this.descripcion = descripcion;
     }
 
-    public boolean isSolucionada() {
-        return solucionada;
+    public Date getDateInicio() {
+        return dateInicio;
     }
 
-    public void setSolucionada(boolean solucionada) {
-        this.solucionada = solucionada;
+    public void setDateInicio(Date dateInicio) {
+        this.dateInicio = dateInicio;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
 

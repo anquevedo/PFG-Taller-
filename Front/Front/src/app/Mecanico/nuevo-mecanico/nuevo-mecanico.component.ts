@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenService } from '../service/token.service';
-import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
-import { NuevoUsuario } from '../models/nuevo-usuario';
 import { ToastrService } from 'ngx-toastr';
+import { NuevoUsuario } from 'src/app/models/nuevo-usuario';
+import { AuthService } from 'src/app/service/auth.service';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  selector: 'app-nuevo-mecanico',
+  templateUrl: './nuevo-mecanico.component.html',
+  styleUrls: ['./nuevo-mecanico.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class NuevoMecanicoComponent implements OnInit {
 
   nuevoUsuario!: NuevoUsuario;
   nombre!: string;
@@ -19,6 +19,7 @@ export class RegistroComponent implements OnInit {
   password!: string;
   errMsj!: string;
   authorities: Set<string> = new Set<string>();
+  isAdmin = false;
 
   constructor(
     private tokenService: TokenService,
@@ -28,18 +29,21 @@ export class RegistroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
-  onRegister(): void {
-    this.authorities.add("user");
+  onRegisterMecanico(): void {
+    this.authorities.add("mecanico");
+
+    console.log(this.authorities);
     this.nuevoUsuario = new NuevoUsuario(this.nombre, this.nombreUsuario, this.email, this.password, this.authorities);
-    this.authService.nuevoUsuario(this.nuevoUsuario).subscribe(
+    this.authService.nuevoMecanico(this.nuevoUsuario).subscribe(
       data => {
         this.toastr.success('Cuenta Creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
 
-        this.router.navigate(['/login']);
+        this.router.navigate(['/menu']);
       },
       err => {
         this.errMsj = err.error.mensaje;

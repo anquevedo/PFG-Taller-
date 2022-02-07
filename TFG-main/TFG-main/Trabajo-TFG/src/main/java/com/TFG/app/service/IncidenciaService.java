@@ -24,9 +24,6 @@ public class IncidenciaService {
                 return incidenciaRepository.findById(id);
         }
 
-        public Optional<Incidencia> getByNumeroIncidencia(String numeroIncidencia){
-                return incidenciaRepository.findByNumeroIncidencia(numeroIncidencia);
-        }
 
         public void  save(Incidencia incidencia){
                 incidenciaRepository.save(incidencia);
@@ -40,7 +37,4 @@ public class IncidenciaService {
                 return incidenciaRepository.existsById(id);
         }
 
-        public boolean existsByNumeroIncidencia(String numeroIncidencia){
-                return incidenciaRepository.existsByNumeroIncidencia(numeroIncidencia);
-        }
 }

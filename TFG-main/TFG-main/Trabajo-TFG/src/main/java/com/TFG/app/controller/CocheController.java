@@ -20,6 +20,7 @@ public class CocheController {
         @Autowired
         private CocheService cocheService;
 
+    @PreAuthorize("hasRole('USUARIO')")
     @GetMapping("/lista")
     public ResponseEntity<List<Coche>> list(){
         List<Coche> list = cocheService.list();
@@ -38,8 +39,8 @@ public class CocheController {
     public ResponseEntity<Coche> getByNombre(@PathVariable("matricula") String matricula){
         if(!cocheService.existsByMatricula(matricula))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Coche producto = cocheService.getByMatricula(matricula).get();
-        return new ResponseEntity(producto, HttpStatus.OK);
+        Coche coche = cocheService.getByMatricula(matricula).get();
+        return new ResponseEntity(coche, HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -52,7 +53,7 @@ public class CocheController {
             return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
         Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAnio(),cocheDto.getPrecio());
         cocheService.save(coche);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("coche creado"), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
@@ -81,7 +82,7 @@ public class CocheController {
         if(!cocheService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         cocheService.delete(id);
-        return new ResponseEntity(new Mensaje("coche eliminado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("mecanico eliminado"), HttpStatus.OK);
     }
 
 

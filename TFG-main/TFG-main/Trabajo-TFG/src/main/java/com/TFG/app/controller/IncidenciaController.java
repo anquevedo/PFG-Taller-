@@ -34,44 +34,32 @@ public class IncidenciaController {
         return new ResponseEntity(incidencia, HttpStatus.OK);
     }
 
-    @GetMapping("/numeroIncidencia/{numeroIncidencia}")
-    public ResponseEntity<Incidencia> getByNumeroIncidencia(@PathVariable("numeroIncidencia") String numeroIncidencia){
-        if(!incidenciaService.existsByNumeroIncidencia(numeroIncidencia))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Incidencia tip = incidenciaService.getByNumeroIncidencia(numeroIncidencia).get();
-        return new ResponseEntity(tip, HttpStatus.OK);
-    }
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody IncidenciaDto incidenciaDto){
-        if(StringUtils.isBlank(incidenciaDto.getNumeroIncidencia()))
-            return new ResponseEntity(new Mensaje("el numero de incidencia es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(incidenciaDto.getTipo()))
             return new ResponseEntity(new Mensaje("el tipo de incidencia es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(incidenciaDto.getTiempoEst()==null || incidenciaDto.getTiempoEst()<0 )
-            return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        Incidencia incidencia = new Incidencia(incidenciaDto.getNumeroIncidencia(), incidenciaDto.getTipo(), incidenciaDto.getTiempoEst(), incidenciaDto.getDescripcion(), false);
+        if(StringUtils.isBlank(incidenciaDto.getDescripcion()))
+            return new ResponseEntity(new Mensaje("la descripcion es obligatoria"), HttpStatus.BAD_REQUEST);
+
+        Incidencia incidencia = new Incidencia(incidenciaDto.getTipo(),incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),incidenciaDto.getDateFin(), "Pendiente");
         incidenciaService.save(incidencia);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("incidencia creado"), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody IncidenciaDto incidenciaDto){
+    public ResponseEntity<?> update(@PathVariable("id")int id, @PathVariable("estado")String estado,@RequestBody IncidenciaDto incidenciaDto){
         if(!incidenciaService.existsById(id))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(incidenciaService.existsByNumeroIncidencia(incidenciaDto.getNumeroIncidencia()) && incidenciaService.getByNumeroIncidencia(incidenciaDto.getNumeroIncidencia()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("esa incidencia ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(incidenciaDto.getNumeroIncidencia()))
-            return new ResponseEntity(new Mensaje("el tiempo"), HttpStatus.BAD_REQUEST);
-        if(incidenciaDto.getTiempoEst()==null || incidenciaDto.getTiempoEst()<0 )
-            return new ResponseEntity(new Mensaje("el tiempo ser mayor que 0"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("esa incidencia no existe"), HttpStatus.NOT_FOUND);
+
 
         Incidencia incidencia = incidenciaService.getOne(id).get();
-        incidencia.setNumeroIncidencia(incidenciaDto.getNumeroIncidencia());
-        incidencia.setTiempoEst(incidenciaDto.getTiempoEst());
-        incidencia.setSolucionada(incidenciaDto.isSolucionada());
+        incidencia.setEstado(incidenciaDto.getEstado());
+        incidencia.setDescripcion(incidenciaDto.getDescripcion());
+        incidencia.setDateFin(incidenciaDto.getDateFin());
         incidenciaService.save(incidencia);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+
+        return new ResponseEntity(new Mensaje("incidencia actualizado"), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

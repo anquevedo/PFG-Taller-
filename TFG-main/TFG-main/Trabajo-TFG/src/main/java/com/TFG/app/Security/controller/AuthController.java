@@ -10,9 +10,11 @@ import com.TFG.app.Security.jwt.JwtProvider;
 import com.TFG.app.Security.service.RolService;
 import com.TFG.app.Security.service.UsuarioService;
 import com.TFG.app.dto.Mensaje;
+import com.TFG.app.entity.Coche;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -45,7 +48,6 @@ public class AuthController {
 
     @Autowired
     JwtProvider jwtProvider;
-
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -57,6 +59,9 @@ public class AuthController {
         Usuario usuario =
                 new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
                         passwordEncoder.encode(nuevoUsuario.getPassword()));
+        System.out.println(nuevoUsuario);
+        System.out.println(nuevoUsuario.getRoles());
+
         Set<Rol> roles = new HashSet<>();
         if (nuevoUsuario.getRoles().contains("admin")) {
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
@@ -74,6 +79,60 @@ public class AuthController {
         return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
     }
 
+    @PostMapping("/nuevoUsuario")
+    public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
+        if (usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        if (usuarioService.existsByEmail(nuevoUsuario.getEmail()))
+            return new ResponseEntity(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
+        Usuario usuario =
+                new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
+                        passwordEncoder.encode(nuevoUsuario.getPassword()));
+        System.out.println(nuevoUsuario);
+        System.out.println(nuevoUsuario.getRoles());
+
+        Set<Rol> roles = new HashSet<>();
+        if (nuevoUsuario.getRoles().contains("admin")) {
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_MECANICO).get());
+        }
+        roles.add(rolService.getByRolNombre(RolNombre.ROLE_USUARIO).get());
+
+        usuario.setRoles(roles);
+
+        usuarioService.save(usuario);
+        return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/nuevoMecanico")
+    public ResponseEntity<?> nuevoMecanico(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
+        if (usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        if (usuarioService.existsByEmail(nuevoUsuario.getEmail()))
+            return new ResponseEntity(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
+        Usuario usuario =
+                new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
+                        passwordEncoder.encode(nuevoUsuario.getPassword()));
+        System.out.println(nuevoUsuario);
+        System.out.println(nuevoUsuario.getRoles());
+
+        Set<Rol> roles = new HashSet<>();
+        if (nuevoUsuario.getRoles().contains("admin")) {
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_USUARIO).get());
+        }
+
+        roles.add(rolService.getByRolNombre(RolNombre.ROLE_MECANICO).get());
+
+        usuario.setRoles(roles);
+        usuarioService.save(usuario);
+        return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -86,10 +145,29 @@ public class AuthController {
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
+    @GetMapping("/getMecanicos1")
+    public ResponseEntity<List<Usuario>> list() {
+        List<Usuario> list = usuarioService.find();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
     @PostMapping("/refresh")
     public ResponseEntity<JwtDto> refresh(@RequestBody JwtDto jwtDto) throws ParseException {
         String token = jwtProvider.refreshToken(jwtDto);
         JwtDto jwt = new JwtDto(token);
         return new ResponseEntity(jwt, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")String nombreUsuario){
+        if(!usuarioService.existsByNombreUsuario(nombreUsuario))
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        int id = usuarioService.buscarNombreUsuario(nombreUsuario);
+        System.out.println(id);
+        usuarioService.deleteRol(id);
+        usuarioService.deleteUsuario(id);
+        return new ResponseEntity(new Mensaje("coche eliminado"), HttpStatus.OK);
     }
 }

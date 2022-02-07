@@ -1,5 +1,7 @@
 package com.TFG.app.Security.entity;
 
+import com.TFG.app.entity.Coche;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -24,7 +26,12 @@ public class Usuario {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
+
     private Set<Rol> roles = new HashSet<>();
+/*
+    @OneToMany(targetEntity = Coche.class)
+    @JoinColumn(name = "cocheid",referencedColumnName = "coche_id")
+    private Set<Coche> coche = new HashSet<Coche>();*/
 
     public Usuario() {
     }
