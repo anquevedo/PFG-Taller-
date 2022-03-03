@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   cocheURL: 'http://localhost:8080/Coche/',
   authURL: 'http://localhost:8080/auth/',
+  incidenciaURL: 'http://localhost:8080/Incidencia/',
   changePasswordURL: 'http://localhost:8080/email-password/'
 };
 

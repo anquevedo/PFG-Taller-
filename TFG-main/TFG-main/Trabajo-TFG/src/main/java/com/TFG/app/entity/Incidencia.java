@@ -15,7 +15,6 @@ public class Incidencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String tipo;
     private String descripcion;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -33,8 +32,7 @@ public class Incidencia {
 
     }
 
-    public Incidencia(String tipo, String descripcion, Date dateInicio, Date dateFin, String estado) {
-        this.tipo = tipo;
+    public Incidencia(String descripcion, Date dateInicio, Date dateFin, String estado) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
@@ -47,14 +45,6 @@ public class Incidencia {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getDescripcion() {

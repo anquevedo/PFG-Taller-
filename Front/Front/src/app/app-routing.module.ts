@@ -14,6 +14,12 @@ import { LoginGuard } from './guards/login.guards';
 import { ListaMecanicoComponent } from './Mecanico/lista-mecanico/lista-mecanico.component';
 import { MecanicoGuardService } from './guards/mecanico-guard.service';
 import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico.component';
+import { ListaIncidenciaComponent } from './incidencia/lista-incidencia.component';
+import { EditarIncidenciaComponent } from './incidencia/editar-incidencia.component';
+import { NuevaIncidenciaComponent } from './incidencia/nueva-incidencia.component';
+import { IncidenciaGuardService } from './guards/incidencia-guard.service';
+
+
 
 
 const routes: Routes = [
@@ -22,12 +28,18 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
   { path: 'sendemail', component: SendEmailComponent, canActivate: [LoginGuard] },
   { path: 'change-password/:tokenPassword', component: ChangePasswordComponent, canActivate: [LoginGuard] },
-  { path: 'lista', component: ListaCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user'] } },
-  { path: 'detalle/:id', component: DetalleCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user'] } },
-  { path: 'nuevo', component: NuevoCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin'] } },
+  { path: 'lista', component: ListaCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
+  { path: 'detalle/:id', component: DetalleCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
+  { path: 'nuevo', component: NuevoCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
   { path: 'editar/:id', component: EditarCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin'] } },
   { path: 'nuevoMecanico', component: NuevoMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },
   { path: 'listaMecanico', component: ListaMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },
+
+  { path: 'nuevaIncidencia', component: NuevaIncidenciaComponent, canActivate: [IncidenciaGuardService],data: { expectedRol: ['mecanico', 'admin', 'user'] } },
+  { path: 'listaincidencia', component: ListaIncidenciaComponent, canActivate: [IncidenciaGuardService],data: { expectedRol: ['mecanico', 'admin', 'user'] } },
+  { path: 'editarIncidencia/:id', component: EditarIncidenciaComponent, canActivate: [IncidenciaGuardService], data: { expectedRol: ['mecanico', 'admin', 'user'] } },
+
+
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

@@ -8,8 +8,6 @@ import java.util.Date;
 
 public class IncidenciaDto {
 
-    @NotBlank
-    private String tipo;
 
     @NotBlank
     private String descripcion;
@@ -25,21 +23,13 @@ public class IncidenciaDto {
     public IncidenciaDto() {
         }
 
-    public IncidenciaDto(@NotBlank String tipo, @NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado) {
-        this.tipo = tipo;
+    public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
         this.estado = estado;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 
     public String getDescripcion() {
         return descripcion;

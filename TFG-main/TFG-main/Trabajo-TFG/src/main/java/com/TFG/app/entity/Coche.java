@@ -14,10 +14,10 @@ public class Coche {
     private String modelo;
     private int anio;
     private float precio;
-/*
+
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Usuario.class)
-    @JoinColumn(name= "userid", referencedColumnName = "user_id")
-    private Usuario usuario;*/
+    @JoinColumn(name= "userid", referencedColumnName = "id")
+    private Usuario usuario;
 
     public Coche() {
     }

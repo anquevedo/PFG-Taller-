@@ -13,6 +13,8 @@ export class ListaCocheComponent implements OnInit {
 
   coches: Coche[] = [];
   isAdmin = false;
+  isUser=false;
+  isMecanico=false;
 
   constructor(
     private cocheService: CocheService,
@@ -23,6 +25,8 @@ export class ListaCocheComponent implements OnInit {
   ngOnInit() {
     this.cargarCoches();
     this.isAdmin = this.tokenService.isAdmin();
+    this.isUser = this.tokenService.isUser();
+    this.isMecanico = this.tokenService.isMecanico();
   }
 
   cargarCoches(): void {

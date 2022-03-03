@@ -23,6 +23,9 @@ import { SendEmailComponent } from './changepassword/send-email.component';
 import { ChangePasswordComponent } from './changepassword/change-password.component';
 import { ListaMecanicoComponent } from './Mecanico/lista-mecanico/lista-mecanico.component';
 import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico.component';
+import { ListaIncidenciaComponent } from './incidencia/lista-incidencia.component';
+import { EditarIncidenciaComponent } from './incidencia/editar-incidencia.component';
+import { NuevaIncidenciaComponent } from './incidencia/nueva-incidencia.component';
 
 
 
@@ -40,7 +43,10 @@ import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico
     SendEmailComponent,
     ChangePasswordComponent,
     ListaMecanicoComponent,
-    NuevoMecanicoComponent
+    NuevoMecanicoComponent,
+    ListaIncidenciaComponent,
+    EditarIncidenciaComponent,
+    NuevaIncidenciaComponent
   ],
   imports: [
     BrowserModule,

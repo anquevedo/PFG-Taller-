@@ -1,0 +1,30 @@
+<app-menu></app-menu>
+<div class="container">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">descripcion</th>
+        <th scope="col">dateInicio</th>
+        <th scope="col">dateFin</th>
+        <th scope="col">estado</th>
+        <th scope="col" *ngIf="isAdmin">Editar</th>
+        <th scope="col" *ngIf="isAdmin">Borrar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let incidencia of incidencia">
+        <td>{{incidencia.descripcion}}</td>
+        <td>{{incidencia.dateInicio}}</td>
+        <td>{{incidencia.dateFin}}</td>
+        <td>{{incidencia.estado}}</td>
+        <td *ngIf="isAdmin || isMecanico"><button class="btn btn-outline-warning" routerLink="/editarIncidencia/{{incidencia.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td *ngIf="isAdmin"><button class="btn btn-outline-danger" (click)="borrar(incidencia.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-3" *ngIf="isUser">
+    <button class="btn btn-outline-success btn-lg" routerLink="/nuevaIncidencia">
+      <i class="fas fa-plus-circle"></i> Nueva Incidencia</button>
+  </div>
+
+</div>
