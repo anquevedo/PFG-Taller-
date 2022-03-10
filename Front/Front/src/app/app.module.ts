@@ -26,6 +26,8 @@ import { NuevoMecanicoComponent } from './Mecanico/nuevo-mecanico/nuevo-mecanico
 import { ListaIncidenciaComponent } from './incidencia/lista-incidencia.component';
 import { EditarIncidenciaComponent } from './incidencia/editar-incidencia.component';
 import { NuevaIncidenciaComponent } from './incidencia/nueva-incidencia.component';
+import { ListaUsuariosComponent } from './auth/lista-usuarios.component';
+import { MisIncidenciaComponent } from './incidencia/mis-incidencia.component';
 
 
 
@@ -46,7 +48,9 @@ import { NuevaIncidenciaComponent } from './incidencia/nueva-incidencia.componen
     NuevoMecanicoComponent,
     ListaIncidenciaComponent,
     EditarIncidenciaComponent,
-    NuevaIncidenciaComponent
+    NuevaIncidenciaComponent,
+    ListaUsuariosComponent,
+    MisIncidenciaComponent
   ],
   imports: [
     BrowserModule,

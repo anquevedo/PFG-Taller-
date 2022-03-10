@@ -31,8 +31,11 @@ export class AuthService {
     return this.httpClient.post<JwtDTO>(this.authURL + 'refresh', dto);
   }
 
+  public listaUsuarios(): Observable<NuevoUsuario[]> {
+    return this.httpClient.get<NuevoUsuario[]>(this.authURL + 'getUsuarios');
+  }
   public lista(): Observable<NuevoUsuario[]> {
-    return this.httpClient.get<NuevoUsuario[]>(this.authURL + 'getMecanicos1');
+    return this.httpClient.get<NuevoUsuario[]>(this.authURL + 'getMecanicos');
   }
 
   public delete(id: string): Observable<any> {

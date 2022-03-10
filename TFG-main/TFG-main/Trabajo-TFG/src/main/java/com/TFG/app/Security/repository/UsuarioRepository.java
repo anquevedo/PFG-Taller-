@@ -21,7 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmail(String email);
 
     @Query(nativeQuery =true ,value ="SELECT * FROM usuario u, usuario_rol r WHERE u.id=r.usuario_id and r.rol_id=(3)")
-    public List<Usuario> find();
+    public List<Usuario> findMecanicos();
 
     @Query(nativeQuery =true ,value ="SELECT u.id FROM usuario u WHERE u.nombre_usuario=:nombreUsuario")
     public int buscarNombreUsuario (@PathVariable ("nombreUsuario") String nombreUsuario);
@@ -30,11 +30,34 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(nativeQuery =true ,value ="DELETE ur FROM usuario_rol ur WHERE ur.usuario_id =:id")
     public void deleteByRol (@PathVariable ("id") int id);
 
+    @Modifying
+    @Query(nativeQuery =true ,value ="DELETE c FROM coche c WHERE c.nombre_usuario =:nombreUsuario")
+    public void deleteCoches (@PathVariable ("nombreUsuario") String nombreUsuario);
+
+    @Modifying
+    @Query(nativeQuery =true ,value ="DELETE i FROM incidencia i WHERE i.nombre_usuario =:nombreUsuario")
+    public void deleteIncidencias (@PathVariable ("nombreUsuario") String nombreUsuario);
+
+    @Modifying
+    @Query(nativeQuery =true ,value ="UPDATE incidencia i set nombre_mecanico='' WHERE i.nombre_mecanico =:nombreUsuario")
+    public void updateIncidencia(@PathVariable ("nombreUsuario") String nombreUsuario);
+
+    @Modifying
+    @Query(nativeQuery =true ,value ="UPDATE incidencia i set seleccionada=0 WHERE i.nombre_mecanico =:nombreUsuario")
+    public void updateIncidenciaSelec(@PathVariable ("nombreUsuario") String nombreUsuario);
+
 
     @Modifying
     @Query(nativeQuery =true ,value ="DELETE u FROM usuario u WHERE u.id =:id")
     public void deleteByUsuario (@PathVariable ("id") int id);
 
+
+
+
+
+
+    @Query(nativeQuery =true ,value ="SELECT * FROM usuario u, usuario_rol r WHERE u.id=r.usuario_id and r.rol_id=(2)")
+    public List<Usuario> findUsuarios();
 
 
 }

@@ -43,7 +43,9 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> find() {return usuarioRepository.find(); }
+    public List<Usuario> findMecanicos() {return usuarioRepository.findMecanicos(); }
+
+    public List<Usuario> findUsuarios() {return usuarioRepository.findUsuarios(); }
 
     public int buscarNombreUsuario(String nombreUsuario){
         return usuarioRepository.buscarNombreUsuario(nombreUsuario);
@@ -52,10 +54,22 @@ public class UsuarioService {
     public void deleteRol(int id){
         usuarioRepository.deleteByRol(id);
     }
+
     public void deleteUsuario(int id){
         usuarioRepository.deleteByUsuario(id);
 
     }
-
+    public void deleteCoches(String nombreUsuario) {
+        usuarioRepository.deleteCoches(nombreUsuario);
+    }
+    public void deleteIncidencias(String nombreUsuario){
+        usuarioRepository.deleteIncidencias(nombreUsuario);
+    }
+    public void updateIncidencia(String nombreUsuario){
+        usuarioRepository.updateIncidencia(nombreUsuario);
+    }
+    public void updateIncidenciaSelec(String nombreUsuario){
+        usuarioRepository.updateIncidenciaSelec(nombreUsuario);
+    }
 
 }

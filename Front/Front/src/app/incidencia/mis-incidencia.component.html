@@ -7,9 +7,8 @@
         <th scope="col">Fecha Inicio</th>
         <th scope="col">Fecha Final</th>
         <th scope="col">Estado de la Incidencia</th>
-        <th scope="col" *ngIf="isAdmin">Desasignar</th>
-        <th scope="col" *ngIf="isAdmin">Asignar</th>
-
+        <th scope="col" *ngIf="isAdmin">Editar</th>
+        <th scope="col" *ngIf="isAdmin">Borrar</th>
       </tr>
     </thead>
     <tbody>
@@ -18,8 +17,9 @@
         <td>{{incidencia.dateInicio}}</td>
         <td>{{incidencia.dateFin}}</td>
         <td>{{incidencia.estado}}</td>
-        <td *ngIf="isAdmin"><button class="btn btn-outline-success btn-block" (click)="quitarIncidencia(incidencia.id)"><i class="fas fa-pencil-alt"></i> Desasignar</button></td>
-        <td *ngIf="isMecanico"><button class="btn btn-outline-success btn-block" (click)="seleccionarIncidencia(incidencia.id)"><i class="fas fa-pencil-alt"></i> Asignar</button></td>
+        <td *ngIf="isMecanico"><button class="btn btn-outline-success btn-block" (click)="quitarIncidencia(incidencia.id)"><i class="fas fa-pencil-alt"></i> Desasignar</button></td>
+        <td *ngIf="isAdmin || isMecanico"><button class="btn btn-outline-warning" routerLink="/editarIncidencia/{{incidencia.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td *ngIf="isMecanico"><button class="btn btn-outline-danger" (click)="borrar(incidencia.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
       </tr>
     </tbody>
   </table>

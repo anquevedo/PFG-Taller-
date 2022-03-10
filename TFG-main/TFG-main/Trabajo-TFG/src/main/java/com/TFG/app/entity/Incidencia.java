@@ -31,17 +31,25 @@ public class Incidencia {
     @NotNull
     private String nombreUsuario;
 
+    private String nombreMecanico;
+
+    @NotNull
+    private Boolean seleccionada;
+
 
     public Incidencia (){
 
     }
 
-    public Incidencia(String descripcion, Date dateInicio, Date dateFin, String estado, String nombreUsuario) {
+    public Incidencia(String descripcion, Date dateInicio, Date dateFin, String estado,
+                      String nombreUsuario, Boolean seleccionada, String nombreMecanico) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
         this.estado = estado;
         this.nombreUsuario=nombreUsuario;
+        this.seleccionada = seleccionada;
+        this.nombreMecanico=nombreMecanico;
     }
 
     public int getId() {
@@ -90,5 +98,21 @@ public class Incidencia {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombreMecanico() {
+        return nombreMecanico;
+    }
+
+    public void setNombreMecanico(String nombreMecanico) {
+        this.nombreMecanico = nombreMecanico;
+    }
+
+    public Boolean getSeleccionada() {
+        return seleccionada;
+    }
+
+    public void setSeleccionada(Boolean seleccionada) {
+        this.seleccionada = seleccionada;
     }
 }

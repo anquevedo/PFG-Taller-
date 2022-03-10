@@ -6,11 +6,11 @@ import { AuthService } from 'src/app/service/auth.service';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-lista-mecanico',
-  templateUrl: './lista-mecanico.component.html',
-  styleUrls: ['./lista-mecanico.component.css']
+  selector: 'app-lista-usuarios',
+  templateUrl: './lista-usuarios.component.html',
+  styleUrls: ['./lista-usuarios.component.css']
 })
-export class ListaMecanicoComponent implements OnInit {
+export class ListaUsuariosComponent implements OnInit {
 
   isAdmin = false;
   nuevoUsuario: NuevoUsuario[] = [];
@@ -22,15 +22,14 @@ export class ListaMecanicoComponent implements OnInit {
   ) { }
 
 
-  
 
   ngOnInit() {
-    this.cargarMecanico();
+    this.cargarUsuario();
     this.isAdmin = this.tokenService.isAdmin();
   }
 
-  cargarMecanico(): void {
-    this.authService.lista().subscribe(
+  cargarUsuario(): void {
+    this.authService.listaUsuarios().subscribe(
       data => {
         this.nuevoUsuario = data;
       },
@@ -43,10 +42,10 @@ export class ListaMecanicoComponent implements OnInit {
   borrar(id: string) {
     this.authService.delete(id).subscribe(
       data => {
-        this.toastr.success('Mecanico Eliminado', 'OK', {
+        this.toastr.success('Usuario Eliminado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.cargarMecanico();
+        this.cargarUsuario();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {

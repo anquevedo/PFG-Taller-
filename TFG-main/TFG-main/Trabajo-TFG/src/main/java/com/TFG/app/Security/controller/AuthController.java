@@ -146,9 +146,27 @@ public class AuthController {
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getMecanicos1")
-    public ResponseEntity<List<Usuario>> list() {
-        List<Usuario> list = usuarioService.find();
+    @GetMapping("/getMecanicos")
+    public ResponseEntity<List<Usuario>> listMecanicos() {
+        List<Usuario> list = usuarioService.findMecanicos();
+        for(int i = 0; i < list.size(); i++) {
+            if (list.get(i).getNombre().equals("admin")) {
+                list.remove(i);
+                i--;
+            }
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/getUsuarios")
+    public ResponseEntity<List<Usuario>> listUsuarios() {
+        List<Usuario> list = usuarioService.findUsuarios();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getNombre().equals("admin")) {
+                list.remove(i);
+                i--;
+            }
+        }
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
@@ -169,7 +187,12 @@ public class AuthController {
         int id = usuarioService.buscarNombreUsuario(nombreUsuario);
         System.out.println(id);
         usuarioService.deleteRol(id);
+        usuarioService.deleteCoches(nombreUsuario);
+        usuarioService.updateIncidenciaSelec(nombreUsuario);
+        usuarioService.updateIncidencia(nombreUsuario);
+        usuarioService.deleteIncidencias(nombreUsuario);
         usuarioService.deleteUsuario(id);
+
         return new ResponseEntity(new Mensaje("coche eliminado"), HttpStatus.OK);
     }
 }

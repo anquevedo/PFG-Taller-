@@ -23,15 +23,23 @@ public class IncidenciaDto {
     @NotNull
     private String nombreUsuario;
 
+    @NotNull
+    private Boolean seleccionada;
+
+    private String nombreMecanico;
+
     public IncidenciaDto() {
         }
 
-    public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado, @NotNull String nombreUsuario) {
+    public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado,
+                         @NotNull String nombreUsuario,  @NotNull Boolean seleccionada, String nombreMecanico) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
         this.estado = estado;
         this.nombreUsuario=nombreUsuario;
+        this.seleccionada=seleccionada;
+        this.nombreMecanico=nombreMecanico;
     }
 
 
@@ -73,6 +81,24 @@ public class IncidenciaDto {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+
+
+    }
+
+    public Boolean getSeleccionada() {
+        return seleccionada;
+    }
+
+    public void setSeleccionada(Boolean seleccionada) {
+        this.seleccionada = seleccionada;
+    }
+
+    public String getNombreMecanico() {
+        return nombreMecanico;
+    }
+
+    public void setNombreMecanico(String nombreMecanico) {
+        this.nombreMecanico = nombreMecanico;
     }
 }
 

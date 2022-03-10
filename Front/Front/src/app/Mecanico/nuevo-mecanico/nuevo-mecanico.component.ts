@@ -43,13 +43,15 @@ export class NuevoMecanicoComponent implements OnInit {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
 
-        this.router.navigate(['/menu']);
+        this.router.navigate(['/listaMecanico']);
       },
       err => {
         this.errMsj = err.error.mensaje;
         this.toastr.error(this.errMsj, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
-        });
+        });       
+         this.router.navigate(['/listaMecanico']);
+
       }
     );
   }

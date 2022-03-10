@@ -40,7 +40,7 @@ export class EditarIncidenciaComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params.id;
     this.incidenciaService.updateEstado(id, this.incidencia).subscribe(
       data => {
-        this.toastr.success('Coche Actualizado', 'OK', {
+        this.toastr.success('Incidencia Actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/listaincidencia']);

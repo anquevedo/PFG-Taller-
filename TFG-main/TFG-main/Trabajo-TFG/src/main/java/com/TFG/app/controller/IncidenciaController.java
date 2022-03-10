@@ -27,7 +27,21 @@ public class IncidenciaController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @GetMapping("/listaPorNombre/{nombreUsuario}")
+    @GetMapping("/listaPorNombreMecanico/{nombreUsuario}")
+    public ResponseEntity<List<Incidencia>> listaPorNombreMecanico(@PathVariable("nombreUsuario") String nombreUsuario) {
+        List<Incidencia> list = incidenciaService.list();
+
+        for (int i = 0; i < list.size(); i++) {
+            String nombreUs= list.get(i).getNombreMecanico();
+
+            if (!nombreUs.equals(nombreUsuario)) {
+                list.remove(i);
+                i--;
+            }
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+    @GetMapping("/listaPorNombreUsuario/{nombreUsuario}")
     public ResponseEntity<List<Incidencia>> listaPorNombre(@PathVariable("nombreUsuario") String nombreUsuario) {
         List<Incidencia> list = incidenciaService.list();
 
@@ -42,12 +56,26 @@ public class IncidenciaController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("/listaSinSeleccionar/")
+    public ResponseEntity<List<Incidencia>> listaSinSeleccionar() {
+        List<Incidencia> list = incidenciaService.list();
+
+        for (int i = 0; i < list.size(); i++) {
+
+            if (!list.get(i).getNombreMecanico().equals("")) {
+                list.remove(i);
+                i--;
+            }
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     @GetMapping("/listaId/{id}")
     public ResponseEntity<List<Incidencia>> listId(@PathVariable("id") int id) {
         List<Incidencia> listAux = incidenciaService.list();
 
         for (int i = 0; i < listAux.size(); i++) {
-            if (listAux.get(i).getId() != id) {
+            if (listAux.get(i).getId() != id || listAux.get(i).getSeleccionada() !=false) {
                 listAux.remove(i);
                 i--;
             }
@@ -73,7 +101,8 @@ public class IncidenciaController {
                 return new ResponseEntity(new Mensaje("No se pueden crear mas incidencias"), HttpStatus.BAD_REQUEST);
             }
         }
-        Incidencia incidencia = new Incidencia(incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),incidenciaDto.getDateFin(), "Pendiente", incidenciaDto.getNombreUsuario());
+        Incidencia incidencia = new Incidencia(incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),
+                incidenciaDto.getDateFin(), "Pendiente", incidenciaDto.getNombreUsuario(), false, "");
         incidenciaService.save(incidencia);
         return new ResponseEntity(new Mensaje("incidencia creado"), HttpStatus.OK);
     }
@@ -99,6 +128,38 @@ public class IncidenciaController {
         incidenciaService.save(incidencia);
 
         return new ResponseEntity(new Mensaje("incidencia actualizado"), HttpStatus.OK);
+    }
+
+    @PutMapping("/seleccionarIncidencia/{id}/{nombreUsuario}")
+    public ResponseEntity<?> seleccionarIncidencia( @PathVariable("id")int id, @PathVariable("nombreUsuario")String nombreUsuario){
+
+        if(!incidenciaService.existsById(id))
+            return new ResponseEntity(new Mensaje("esa incidencia no existe"), HttpStatus.NOT_FOUND);
+
+        Incidencia incidencia = incidenciaService.getOne(id).get();
+        incidencia.setSeleccionada(true);
+        incidencia.setNombreMecanico(nombreUsuario);
+        incidencia.setEstado("En Proceso");
+        incidenciaService.save(incidencia);
+
+        return new ResponseEntity(new Mensaje("Has seleccionado la incidencia"), HttpStatus.OK);
+
+    }
+
+    @PutMapping("/quitarIncidencia/{id}/{nombreUsuario}")
+    public ResponseEntity<?> quitarIncidencia( @PathVariable("id")int id, @PathVariable("nombreUsuario")String nombreUsuario){
+
+        if(!incidenciaService.existsById(id))
+            return new ResponseEntity(new Mensaje("esa incidencia no existe"), HttpStatus.NOT_FOUND);
+
+        Incidencia incidencia = incidenciaService.getOne(id).get();
+        incidencia.setSeleccionada(false);
+        incidencia.setNombreMecanico("");
+        incidencia.setEstado("Pendiente");
+        incidenciaService.save(incidencia);
+
+        return new ResponseEntity(new Mensaje("Has quitado la incidencia"), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/delete/{id}")

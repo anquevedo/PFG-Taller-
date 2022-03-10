@@ -11,18 +11,25 @@
       <li class="nav-item" *ngIf="isAdmin">
         <a class="nav-link" routerLink="/listaMecanico"><i class="fas fa-plus-circle"></i> Mecanicos</a>
       </li>
+
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link" routerLink="/listaUsuario"><i class="fas fa-plus-circle"></i> Usuarios</a>
+      </li>
+
       <li class="nav-item" *ngIf="isUser || isAdmin">
         <td *ngIf="isUser || isAdmin" ><a class="nav-link" routerLink="/lista"><i class="far fa-list-alt"></i> Lista Coches</a>/td>
+      </li>||
+      <li class="nav-item" *ngIf="isMecanico">
+        <td *ngIf="isMecanico || isAdmin" ></td><a class="nav-link" routerLink="/misIncidencia"><i class="fas fa-plus-circle"></i>Mis Incidencias</a>
       </li>
-      <li class="nav-item" *ngIf="isUser || isAdmin">
-        <td *ngIf="isUser || isAdmin" ></td><a class="nav-link" routerLink="/listaincidencia"><i class="fas fa-plus-circle"></i>Mis Incidencias</a>
+
+      <li class="nav-item" *ngIf="isMecanico || isAdmin || isUser">
+        <td *ngIf="isMecanico" ></td><a class="nav-link" routerLink="/listaincidencia"><i class="far fa-list-alt"></i> Lista Incidencia</a>
       </li>
 
 
       
-      <li class="nav-item" *ngIf="isMecanico || isAdmin">
-        <td *ngIf="isMecanico" ></td><a class="nav-link" routerLink="/listaincidencia"><i class="far fa-list-alt"></i> Lista Incidencia</a>
-      </li>
+
 
       
     </ul>

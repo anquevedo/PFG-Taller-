@@ -4,6 +4,8 @@ import { CocheService } from '../service/coche.service';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from '../service/token.service';
 
+const TOKEN_KEY = 'AuthToken';
+
 @Component({
   selector: 'app-lista-coche',
   templateUrl: './lista-coche.component.html',
@@ -23,7 +25,9 @@ export class ListaCocheComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cargarCoches();
+    if(this.tokenService.isAdmin()){
+      this.cargarCoches();
+    }else this.cargarPorUsuario();
     this.isAdmin = this.tokenService.isAdmin();
     this.isUser = this.tokenService.isUser();
     this.isMecanico = this.tokenService.isMecanico();
@@ -40,6 +44,17 @@ export class ListaCocheComponent implements OnInit {
     );
   }
 
+  cargarPorUsuario(): void {
+    this.cocheService.listaPorNombre(this.tokenService.getUserName()).subscribe(
+      data => {
+        this.coches = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+  
   borrar(id: number) {
     this.cocheService.delete(id).subscribe(
       data => {
@@ -55,4 +70,6 @@ export class ListaCocheComponent implements OnInit {
       }
     );
   }
+
+
 }
