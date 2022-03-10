@@ -5,10 +5,18 @@
             <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
                 
                 <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" id="estado" name="estado"
+                    <label for="dateFin">Fecha Fin</label>
+                    <input type="date" class="form-control" id="dateFin" name="dateFin"
+                    [(ngModel)]="incidencia.dateFin" required>
+                </div>   
+                <select class="form-select" aria-label="Default select example" 
+                    input type="Estado" class="form-control" id="estado" name="estado"
                     [(ngModel)]="incidencia.estado" required>
-                </div>
+                    <option value="Pendiente">Pendiente </option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Finalizada">Finalizada</option>
+                  </select>
+
 
                 <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
                     <i class="fas fa-pencil-alt"></i> Actualizar</button>

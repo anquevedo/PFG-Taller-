@@ -11,6 +11,7 @@ import com.TFG.app.Security.service.RolService;
 import com.TFG.app.Security.service.UsuarioService;
 import com.TFG.app.dto.Mensaje;
 import com.TFG.app.entity.Coche;
+import com.TFG.app.entity.Incidencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -150,6 +151,7 @@ public class AuthController {
         List<Usuario> list = usuarioService.find();
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
 
 
     @PostMapping("/refresh")

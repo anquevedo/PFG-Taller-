@@ -27,13 +27,53 @@ public class IncidenciaController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("/listaPorNombre/{nombreUsuario}")
+    public ResponseEntity<List<Incidencia>> listaPorNombre(@PathVariable("nombreUsuario") String nombreUsuario) {
+        List<Incidencia> list = incidenciaService.list();
+
+        for (int i = 0; i < list.size(); i++) {
+            String nombreUs= list.get(i).getNombreUsuario();
+
+            if (!nombreUs.equals(nombreUsuario)) {
+                list.remove(i);
+                i--;
+            }
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/listaId/{id}")
+    public ResponseEntity<List<Incidencia>> listId(@PathVariable("id") int id) {
+        List<Incidencia> listAux = incidenciaService.list();
+
+        for (int i = 0; i < listAux.size(); i++) {
+            if (listAux.get(i).getId() != id) {
+                listAux.remove(i);
+                i--;
+            }
+        }
+
+        return new ResponseEntity(listAux, HttpStatus.OK);
+
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody IncidenciaDto incidenciaDto){
         if(StringUtils.isBlank(incidenciaDto.getDescripcion()))
             return new ResponseEntity(new Mensaje("la descripcion es obligatoria"), HttpStatus.BAD_REQUEST);
+        List<Incidencia> list = incidenciaService.list();
+        int count= 0;
+        for (int i = 0; i < list.size(); i++) {
 
-        Incidencia incidencia = new Incidencia(incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),incidenciaDto.getDateFin(), "Pendiente");
+            if (list.get(i).getNombreUsuario().equals(incidenciaDto.getNombreUsuario())) {
+                count++;
+            }
+            if (count==5){
+                return new ResponseEntity(new Mensaje("No se pueden crear mas incidencias"), HttpStatus.BAD_REQUEST);
+            }
+        }
+        Incidencia incidencia = new Incidencia(incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),incidenciaDto.getDateFin(), "Pendiente", incidenciaDto.getNombreUsuario());
         incidenciaService.save(incidencia);
         return new ResponseEntity(new Mensaje("incidencia creado"), HttpStatus.OK);
     }
@@ -54,6 +94,8 @@ public class IncidenciaController {
 
         Incidencia incidencia = incidenciaService.getOne(id).get();
         incidencia.setEstado(incidenciaDto.getEstado());
+        incidencia.setDateFin(incidenciaDto.getDateFin());
+
         incidenciaService.save(incidencia);
 
         return new ResponseEntity(new Mensaje("incidencia actualizado"), HttpStatus.OK);

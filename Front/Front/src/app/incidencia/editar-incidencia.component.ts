@@ -13,6 +13,7 @@ export class EditarIncidenciaComponent implements OnInit {
 
   incidencia!: Incidencia;
 
+
   constructor(
     private incidenciaService: IncidenciaService,
     private activatedRoute: ActivatedRoute,

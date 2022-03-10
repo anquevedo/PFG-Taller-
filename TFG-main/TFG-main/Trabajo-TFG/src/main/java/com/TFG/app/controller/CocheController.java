@@ -3,6 +3,7 @@ package com.TFG.app.controller;
 import com.TFG.app.dto.CocheDto;
 import com.TFG.app.dto.Mensaje;
 import com.TFG.app.entity.Coche;
+import com.TFG.app.entity.Incidencia;
 import com.TFG.app.service.CocheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,21 @@ public class CocheController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("/listaPorNombre/{nombreUsuario}")
+    public ResponseEntity<List<Coche>> listaPorNombre(@PathVariable("nombreUsuario") String nombreUsuario) {
+        List<Coche> list = cocheService.list();
+
+        for (int i = 0; i < list.size(); i++) {
+            String nombreUs= list.get(i).getNombreUsuario();
+
+            if (!nombreUs.equals(nombreUsuario)) {
+                list.remove(i);
+                i--;
+            }
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     @GetMapping("/detail/{id}")
     public ResponseEntity<Coche> getById(@PathVariable("id") int id){
         if(!cocheService.existsById(id))
@@ -43,6 +59,7 @@ public class CocheController {
         return new ResponseEntity(coche, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USUARIO')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody CocheDto cocheDto){
         if(StringUtils.isBlank(cocheDto.getMatricula()))
@@ -51,7 +68,8 @@ public class CocheController {
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(cocheService.existsByMatricula(cocheDto.getMatricula()))
             return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
-        Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAnio(),cocheDto.getPrecio());
+        System.out.println(cocheDto.getNombreUsuario());
+        Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAnio(),cocheDto.getPrecio(), cocheDto.getNombreUsuario());
         cocheService.save(coche);
         return new ResponseEntity(new Mensaje("coche creado"), HttpStatus.OK);
     }

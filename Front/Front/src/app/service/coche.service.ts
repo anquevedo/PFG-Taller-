@@ -21,11 +21,17 @@ export class CocheService {
     return this.httpClient.get<Coche>(this.cocheURL + `detail/${id}`);
   }
 
+
   public detailName(matricula: string): Observable<Coche> {
     return this.httpClient.get<Coche>(this.cocheURL + `detailname/${matricula}`);
   }
 
+  public listaPorNombre(nombreUsuario: string): Observable<Coche[]> {
+    return this.httpClient.get<Coche[]>(this.cocheURL + `listaPorNombre/${nombreUsuario}`);
+  }
+
   public save(coche: Coche): Observable<any> {
+    console.log(this);
     return this.httpClient.post<any>(this.cocheURL + 'create', coche);
   }
 

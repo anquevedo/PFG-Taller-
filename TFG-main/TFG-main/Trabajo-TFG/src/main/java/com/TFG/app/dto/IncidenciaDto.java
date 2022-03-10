@@ -20,14 +20,18 @@ public class IncidenciaDto {
     @NotNull
     private String estado;
 
+    @NotNull
+    private String nombreUsuario;
+
     public IncidenciaDto() {
         }
 
-    public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado) {
+    public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado, @NotNull String nombreUsuario) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
         this.estado = estado;
+        this.nombreUsuario=nombreUsuario;
     }
 
 
@@ -61,6 +65,14 @@ public class IncidenciaDto {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }
 

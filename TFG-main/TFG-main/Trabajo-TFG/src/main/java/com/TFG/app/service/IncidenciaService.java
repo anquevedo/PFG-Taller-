@@ -24,7 +24,6 @@ public class IncidenciaService {
                 return incidenciaRepository.findById(id);
         }
 
-
         public void  save(Incidencia incidencia){
                 incidenciaRepository.save(incidencia);
         }

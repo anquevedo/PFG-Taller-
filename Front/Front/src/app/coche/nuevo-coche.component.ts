@@ -3,6 +3,10 @@ import { CocheService } from '../service/coche.service';
 import { Coche } from '../models/coche';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { NuevoUsuario } from '../models/nuevo-usuario';
+import { TokenService } from '../service/token.service';
+
+const TOKEN_KEY = 'AuthToken';
 
 @Component({
   selector: 'app-nuevo-coche',
@@ -16,18 +20,21 @@ export class NuevoCocheComponent implements OnInit {
   marca!: string;
   modelo!: string;
   anio!: number;
+  nombreUsuario!: string;
 
   constructor(
     private cocheService: CocheService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
     ) { }
 
   ngOnInit() {
   }
 
   onCreate(): void {
-    const coche = new Coche(this.matricula, this.marca, this.modelo, this.anio, this.precio);
+    this.nombreUsuario = this.tokenService.getUserName();
+    const coche = new Coche(this.matricula, this.marca, this.modelo, this.anio, this.precio, this.nombreUsuario);
     this.cocheService.save(coche).subscribe(
       data => {
         this.toastr.success('Coche Creado', 'OK', {
@@ -43,4 +50,26 @@ export class NuevoCocheComponent implements OnInit {
     );
   }
 
+  public getUserName(): string {
+    if (!this.isLogged()) {
+      return null!;
+    }
+    const token = this.getToken();
+    const payload = token.split('.')[1];
+    const payloadDecoded = atob(payload);
+    const values = JSON.parse(payloadDecoded);
+    const username = values.sub;
+    return username;
+  }
+
+  public getToken(): string {
+    return localStorage.getItem(TOKEN_KEY)!;
+  }
+
+  public isLogged(): boolean {
+    if (this.getToken()) {
+      return true;
+    }
+    return false;
+  }
 }

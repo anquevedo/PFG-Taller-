@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -27,16 +28,20 @@ public class Incidencia {
 
     private String estado;
 
+    @NotNull
+    private String nombreUsuario;
+
 
     public Incidencia (){
 
     }
 
-    public Incidencia(String descripcion, Date dateInicio, Date dateFin, String estado) {
+    public Incidencia(String descripcion, Date dateInicio, Date dateFin, String estado, String nombreUsuario) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
         this.estado = estado;
+        this.nombreUsuario=nombreUsuario;
     }
 
     public int getId() {
@@ -77,5 +82,13 @@ public class Incidencia {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }
