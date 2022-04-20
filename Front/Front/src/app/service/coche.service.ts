@@ -17,6 +17,10 @@ export class CocheService {
     return this.httpClient.get<Coche[]>(this.cocheURL + 'lista');
   }
 
+  public listaCoches(nombreUsuario: string): Observable<String[]> {
+    return this.httpClient.get<String[]>(this.cocheURL + `listaCoches/${nombreUsuario}`);
+  }
+
   public detail(id: number): Observable<Coche> {
     return this.httpClient.get<Coche>(this.cocheURL + `detail/${id}`);
   }

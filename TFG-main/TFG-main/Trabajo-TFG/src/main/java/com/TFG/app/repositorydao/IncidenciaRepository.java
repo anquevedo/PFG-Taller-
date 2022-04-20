@@ -13,4 +13,7 @@ import java.util.Optional;
 public interface IncidenciaRepository  extends JpaRepository<Incidencia, Integer> {
 
 
+    @Query(nativeQuery =true ,value ="SELECT count(*) FROM coche c WHERE c.matricula=:numeroMatricula")
+    public int comprobarMatricula (@PathVariable("numeroMatricula") String numeroMatricula);
 }
+

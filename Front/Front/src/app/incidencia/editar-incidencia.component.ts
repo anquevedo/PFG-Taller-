@@ -31,7 +31,7 @@ export class EditarIncidenciaComponent implements OnInit {
         this.toastr.error(err.error.mensaje, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
         });
-        this.router.navigate(['/']);
+        this.router.navigate(['/misIncidencia']);
       }
     );
   }
@@ -43,7 +43,7 @@ export class EditarIncidenciaComponent implements OnInit {
         this.toastr.success('Incidencia Actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.router.navigate(['/listaincidencia']);
+        this.router.navigate(['/misIncidencia']);
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {

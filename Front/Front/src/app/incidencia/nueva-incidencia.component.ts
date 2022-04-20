@@ -22,6 +22,9 @@ export class NuevaIncidenciaComponent implements OnInit {
   dateFin!: Date;
   estado!: string;
   nombreUsuario!: string;
+  matriculaCoche!: string;
+  errMsj!: string;
+
 
 
   constructor(
@@ -36,20 +39,26 @@ export class NuevaIncidenciaComponent implements OnInit {
   }
 
   onCreate(): void {
+
     this.nombreUsuario = this.tokenService.getUserName();
-    const coche = new Incidencia(this.descripcion, this.dateInicio, this.dateFin, this.estado, this.nombreUsuario);
+    const coche = new Incidencia(this.descripcion, this.dateInicio, this.dateFin, this.estado, this.nombreUsuario, this.matriculaCoche);
+    
     this.incidenciaService.save(coche).subscribe(
       data => {
-        this.toastr.success('Incidencia Creado', 'OK', {
+        if(data.mensaje ==='incidencia creado'){
+        this.toastr.success('Incidencia Creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
+      }
+      else this.toastr.error('No existe la matricula', 'Fail',{
+        timeOut: 3000, positionClass: 'toast-top-center' });
         this.router.navigate(['/listaincidencia']);
-      },
+       },
       err => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
+        this.errMsj = err.error.mensaje;
+        this.toastr.error(this.errMsj, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
-        }); 
-        this.router.navigate(['/listaincidencia']);
+        });
       }
     );
   }

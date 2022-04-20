@@ -52,10 +52,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public void deleteByUsuario (@PathVariable ("id") int id);
 
 
-
-
-
-
     @Query(nativeQuery =true ,value ="SELECT * FROM usuario u, usuario_rol r WHERE u.id=r.usuario_id and r.rol_id=(2)")
     public List<Usuario> findUsuarios();
 

@@ -10,11 +10,17 @@ public class Coche {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String matricula;
+
     private String marca;
+
     private String modelo;
+
     private int anio;
+
     private float precio;
+    
     @NotNull
     private String nombreUsuario;
 

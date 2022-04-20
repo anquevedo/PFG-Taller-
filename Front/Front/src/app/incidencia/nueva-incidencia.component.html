@@ -8,11 +8,13 @@
                     <input type="text" class="form-control" id="descripcion" name="descripcion"
                     [(ngModel)]="descripcion" required>
                 </div>
+
                 <div class="form-group">
-                    <label for="dateInicio">Fecha Inicio</label>
-                    <input type="date" class="form-control" id="dateInicio" name="dateInicio"
-                    [(ngModel)]="dateInicio" required>
+                    <label for="matriculaCoche">Numero Matricula</label>
+                    <input type="text" class="form-control" id="matriculaCoche" name="matriculaCoche"
+                    [(ngModel)]="matriculaCoche" required>
                 </div>
+                
                 
                 
                 <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">

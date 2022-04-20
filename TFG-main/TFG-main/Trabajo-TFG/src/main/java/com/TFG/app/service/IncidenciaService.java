@@ -23,7 +23,6 @@ public class IncidenciaService {
         public Optional<Incidencia> getOne(int id){
                 return incidenciaRepository.findById(id);
         }
-
         public void  save(Incidencia incidencia){
                 incidenciaRepository.save(incidencia);
         }
@@ -35,5 +34,12 @@ public class IncidenciaService {
         public boolean existsById(int id){
                 return incidenciaRepository.existsById(id);
         }
+
+        public int comprobarMatricula(String numeroMatricula){
+                return incidenciaRepository.comprobarMatricula(numeroMatricula);
+        }
+
+
+
 
 }

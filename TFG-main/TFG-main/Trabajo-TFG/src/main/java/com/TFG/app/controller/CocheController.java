@@ -67,7 +67,7 @@ public class CocheController {
         if(cocheDto.getPrecio()==null || cocheDto.getPrecio()<1 )
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(cocheService.existsByMatricula(cocheDto.getMatricula()))
-            return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("esa matricula ya existe"), HttpStatus.ACCEPTED);
         System.out.println(cocheDto.getNombreUsuario());
         Coche coche = new Coche(cocheDto.getMatricula(), cocheDto.getMarca(), cocheDto.getModelo(), cocheDto.getAnio(),cocheDto.getPrecio(), cocheDto.getNombreUsuario());
         cocheService.save(coche);
@@ -94,11 +94,14 @@ public class CocheController {
         return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
+
         if(!cocheService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+
+        String matricula = cocheService.buscarMatricula(id);
+        cocheService.borrarIncidencia(matricula);
         cocheService.delete(id);
         return new ResponseEntity(new Mensaje("mecanico eliminado"), HttpStatus.OK);
     }

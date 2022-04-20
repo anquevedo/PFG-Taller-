@@ -43,4 +43,11 @@ public class CocheService {
     public boolean existsByMatricula(String matricula){
         return cocheRepository.existsByMatricula(matricula);
     }
+
+    public String buscarMatricula(int id){
+        return cocheRepository.buscarMatricula(id);
+    }
+
+    public void borrarIncidencia(String matricula){cocheRepository.borrarMatricula(matricula); }
+
 }

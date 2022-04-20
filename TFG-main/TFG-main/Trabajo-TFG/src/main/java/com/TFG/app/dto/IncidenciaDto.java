@@ -12,7 +12,6 @@ public class IncidenciaDto {
     @NotBlank
     private String descripcion;
 
-    @NotBlank
     private Date dateInicio;
 
     private Date dateFin;
@@ -28,11 +27,14 @@ public class IncidenciaDto {
 
     private String nombreMecanico;
 
+    private String matriculaCoche;
+
+
     public IncidenciaDto() {
         }
 
     public IncidenciaDto(@NotBlank String descripcion, @NotBlank Date dateInicio, Date dateFin, @NotNull String estado,
-                         @NotNull String nombreUsuario,  @NotNull Boolean seleccionada, String nombreMecanico) {
+                         @NotNull String nombreUsuario,  @NotNull Boolean seleccionada, String nombreMecanico, String matriculaCoche) {
         this.descripcion = descripcion;
         this.dateInicio = dateInicio;
         this.dateFin = dateFin;
@@ -40,6 +42,7 @@ public class IncidenciaDto {
         this.nombreUsuario=nombreUsuario;
         this.seleccionada=seleccionada;
         this.nombreMecanico=nombreMecanico;
+        this.matriculaCoche=matriculaCoche;
     }
 
 
@@ -99,6 +102,14 @@ public class IncidenciaDto {
 
     public void setNombreMecanico(String nombreMecanico) {
         this.nombreMecanico = nombreMecanico;
+    }
+
+    public String getMatriculaCoche() {
+        return matriculaCoche;
+    }
+
+    public void setMatriculaCoche(String matriculaCoche) {
+        this.matriculaCoche = matriculaCoche;
     }
 }
 

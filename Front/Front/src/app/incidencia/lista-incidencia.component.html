@@ -3,23 +3,28 @@
   <table class="table table-dark">
     <thead>
       <tr>
+        <th scope="col">Coche</th>
         <th scope="col">Descripcion</th>
         <th scope="col">Fecha Inicio</th>
         <th scope="col">Fecha Final</th>
         <th scope="col">Estado de la Incidencia</th>
         <th scope="col" *ngIf="isAdmin">Desasignar</th>
         <th scope="col" *ngIf="isAdmin">Asignar</th>
+        <th scope="col" *ngIf="isUser">Borrar</th>
+
 
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let incidencia of incidencia">
+        <td>{{incidencia.matriculaCoche}}</td>
         <td>{{incidencia.descripcion}}</td>
         <td>{{incidencia.dateInicio}}</td>
         <td>{{incidencia.dateFin}}</td>
         <td>{{incidencia.estado}}</td>
         <td *ngIf="isAdmin"><button class="btn btn-outline-success btn-block" (click)="quitarIncidencia(incidencia.id)"><i class="fas fa-pencil-alt"></i> Desasignar</button></td>
         <td *ngIf="isMecanico"><button class="btn btn-outline-success btn-block" (click)="seleccionarIncidencia(incidencia.id)"><i class="fas fa-pencil-alt"></i> Asignar</button></td>
+        <td *ngIf="isUser"><button class="btn btn-outline-danger" (click)="borrar(incidencia.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
       </tr>
     </tbody>
   </table>

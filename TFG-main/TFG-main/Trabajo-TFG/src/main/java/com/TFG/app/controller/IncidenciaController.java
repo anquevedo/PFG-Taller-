@@ -90,7 +90,14 @@ public class IncidenciaController {
     public ResponseEntity<?> create(@RequestBody IncidenciaDto incidenciaDto){
         if(StringUtils.isBlank(incidenciaDto.getDescripcion()))
             return new ResponseEntity(new Mensaje("la descripcion es obligatoria"), HttpStatus.BAD_REQUEST);
+
         List<Incidencia> list = incidenciaService.list();
+        String numeroMatricula= incidenciaDto.getMatriculaCoche();
+        String nombreUsuario= incidenciaDto.getNombreUsuario();
+
+        if(incidenciaService.comprobarMatricula(numeroMatricula) < 1)
+            return new ResponseEntity(new Mensaje("no existe ese coche"), HttpStatus.ACCEPTED);
+
         int count= 0;
         for (int i = 0; i < list.size(); i++) {
 
@@ -98,11 +105,11 @@ public class IncidenciaController {
                 count++;
             }
             if (count==5){
-                return new ResponseEntity(new Mensaje("No se pueden crear mas incidencias"), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity(new Mensaje("No se pueden crear mas incidencias"), HttpStatus.NOT_FOUND);
             }
         }
         Incidencia incidencia = new Incidencia(incidenciaDto.getDescripcion(),incidenciaDto.getDateInicio(),
-                incidenciaDto.getDateFin(), "Pendiente", incidenciaDto.getNombreUsuario(), false, "");
+                incidenciaDto.getDateFin(), "Pendiente", incidenciaDto.getNombreUsuario(), false, "", incidenciaDto.getMatriculaCoche());
         incidenciaService.save(incidencia);
         return new ResponseEntity(new Mensaje("incidencia creado"), HttpStatus.OK);
     }
