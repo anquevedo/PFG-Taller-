@@ -16,7 +16,7 @@ export class IncidenciaGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const expectedRol = route.data.expectedRol;
-    this.realRol = this.tokenService.isAdmin() ? 'admin' : 'mecanico';
+    this.realRol = this.tokenService.isAdmin() ? 'admin' : 'mecanico'  ;
     if (!this.tokenService.isLogged() || expectedRol.indexOf(this.realRol) < 0) {
       this.router.navigate(['/']);
       return false;

@@ -39,7 +39,22 @@ export class NuevoMecanicoComponent implements OnInit {
     this.nuevoUsuario = new NuevoUsuario(this.nombre, this.nombreUsuario, this.email, this.password, this.authorities);
     this.authService.nuevoMecanico(this.nuevoUsuario).subscribe(
       data => {
-        this.toastr.success('Cuenta Creada', 'OK', {
+        if(data.mensaje ==='campos mal puestos o email inválido'){
+          this.toastr.error('Campos mal puestos o email inválido', 'Fail', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+        }
+        else if(data.mensaje ==='ese nombre ya existe'){
+          this.toastr.error('Ese nombre ya existe', 'Fail', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+        }
+        else if(data.mensaje ==='esa matricula ya existe'){
+          this.toastr.error('Esa matricula ya existe', 'Fail', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+        } 
+        else this.toastr.success('Cuenta Creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
 

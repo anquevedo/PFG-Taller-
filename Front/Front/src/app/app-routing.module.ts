@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'lista', component: ListaCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
   { path: 'detalle/:id', component: DetalleCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
   { path: 'nuevo', component: NuevoCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user', 'mecanico'] } },
-  { path: 'editar/:id', component: EditarCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin'] } },
+  { path: 'editar/:id', component: EditarCocheComponent, canActivate: [CocheGuardService], data: { expectedRol: ['admin', 'user'] } },
   
   { path: 'nuevoMecanico', component: NuevoMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },
   { path: 'listaMecanico', component: ListaMecanicoComponent, canActivate: [MecanicoGuardService],data: { expectedRol: ['admin', 'user'] } },

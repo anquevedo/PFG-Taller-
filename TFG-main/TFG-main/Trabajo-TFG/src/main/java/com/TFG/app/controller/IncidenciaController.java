@@ -130,6 +130,7 @@ public class IncidenciaController {
 
         Incidencia incidencia = incidenciaService.getOne(id).get();
         incidencia.setEstado(incidenciaDto.getEstado());
+        incidencia.setDateInicio(incidenciaDto.getDateInicio());
         incidencia.setDateFin(incidenciaDto.getDateFin());
 
         incidenciaService.save(incidencia);

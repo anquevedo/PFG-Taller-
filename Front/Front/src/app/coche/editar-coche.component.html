@@ -1,9 +1,16 @@
 <app-menu></app-menu>
-<div class="container" *ngIf="coche">
-    <div class="row mt-5">
-        <div class="col-md-4 mx-auto">
+<div class="container d-flex justify-content-center" *ngIf="coche">
+    <div class="card">
+            
             <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
-                
+                <div class="card-header">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a>Coche</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
                 <div class="form-group">
                     <label for="marca">Marca</label>
                     <input type="text" class="form-control" id="marca" name="marca"
@@ -24,11 +31,13 @@
                     <input type="number" class="form-control" id="precio" name="precio"
                     [(ngModel)]="coche.precio" required>
                 </div>
+            </div>
                 <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
                     <i class="fas fa-pencil-alt"></i> Actualizar</button>
                 <button class="btn btn-outline-primary btn-block" routerLink="/lista">
                     <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
             </form>
-        </div>
-    </div>
+        
+</div>
+
 </div>

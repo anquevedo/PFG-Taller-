@@ -7,22 +7,24 @@
         <th scope="col" *ngIf="isAdmin">Usuario</th>
         <th scope="col">Matricula</th>
         <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Año</th>
         <th scope="col">Precio</th>
-        <th scope="col">Ver</th>
-        <th scope="col" *ngIf="isAdmin">Editar</th>
-        <th scope="col" *ngIf="isAdmin">Borrar</th>
+        <th scope="col" *ngIf="isAdmin || isUser">Editar</th>
+        <th scope="col" *ngIf="isAdmin || isUser">Borrar</th>
       </tr>
     </thead>
     <tbody>
 
       <tr *ngFor="let coche of coches">
-        <td>{{coche.nombreUsuario}}</td>
+        <td  *ngIf="isAdmin">{{coche.nombreUsuario}}</td>
         <td>{{coche.matricula}}</td>
         <td>{{coche.marca}}</td>
+        <td>{{coche.modelo}}</td>
+        <td>{{coche.anio}}</td>
         <td>{{coche.precio}}€</td>
-        <td><button class="btn btn-outline-primary" routerLink="/detalle/{{coche.id}}"><i class="far fa-eye"></i> Ver</button></td>
-        <td *ngIf="isAdmin"><button class="btn btn-outline-warning" routerLink="/editar/{{coche.id}}"><i class="far fa-edit"></i> Editar</button></td>
-        <td *ngIf="isAdmin"><button class="btn btn-outline-danger" (click)="borrar(coche.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
+        <td *ngIf="isUser"><button class="btn btn-outline-warning" routerLink="/editar/{{coche.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td *ngIf="isAdmin || isUser"><button class="btn btn-outline-danger" (click)="borrar(coche.id)"><i class="far fa-trash-alt"></i> Eliminar</button></td>
       </tr>
     </tbody>
   </table>

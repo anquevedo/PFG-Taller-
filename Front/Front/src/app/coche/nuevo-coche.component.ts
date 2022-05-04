@@ -21,6 +21,7 @@ export class NuevoCocheComponent implements OnInit {
   modelo!: string;
   anio!: number;
   nombreUsuario!: string;
+  errMsj!: string;
 
   constructor(
     private cocheService: CocheService,
@@ -37,13 +38,19 @@ export class NuevoCocheComponent implements OnInit {
     const coche = new Coche(this.matricula, this.marca, this.modelo, this.anio, this.precio, this.nombreUsuario);
     this.cocheService.save(coche).subscribe(
       data => {
-        this.toastr.success('Coche Creado', 'OK', {
+        if(data.mensaje ==='esa matricula ya existe'){
+          this.toastr.error('La matricula ya existe', 'Fail', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+        }
+        else this.toastr.success('Coche Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/lista']);
       },
       err => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
+        this.errMsj = err.error.mensaje;
+        this.toastr.error(this.errMsj, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
         });
       }
